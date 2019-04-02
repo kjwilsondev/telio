@@ -55,8 +55,12 @@ def decode(digits, base):
         print(answer)
         return answer
 
-    # TODO: Decode digits from any base (2 up to 36)
-    # ...
+    # Decode digits from any base (2 up to 36)
+    for number in digits:
+        number = int(number)
+        answer += number * (base ** length)
+        length -= 1
+    return answer
 
 
 def encode(number, base):
@@ -68,8 +72,18 @@ def encode(number, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
-    # TODO: Encode number in binary (base 2)
-    # ...
+    # Handle numbers above 255
+    assert number <= 255, 'number must be below 255: {}'.format(number)
+
+    # Encode number in binary (base 2)
+    # if base is 2:
+    #     answer = [0, 0, 0, 0, 0, 0, 0 ,0]
+    #     place = len(answer) - 1
+    #     exponent = 0
+    #     while number > 0:
+    #         number = int(number)
+    #         answer[place] = number
+        
     # TODO: Encode number in hexadecimal (base 16)
     # ...
     # TODO: Encode number in any base (2 up to 36)
