@@ -25,7 +25,7 @@ def decode(digits, base):
     # Return integer
     answer = 0
 
-    # Decode digits from binary (base 2)
+    # Decodes digits from binary (base 2)
     if base is 2:
         for number in digits:
             number = int(number)
@@ -35,7 +35,7 @@ def decode(digits, base):
         print(answer)
         return answer
     
-    # TODO: Decode digits from hexadecimal (base 16)
+    # Decodes digits from hexadecimal (base 16)
     if base is 16:
         for number in digits:
             # if letter gives value
@@ -61,7 +61,7 @@ def decode(digits, base):
         print(answer)
         return answer
 
-    # Decode digits from any base (2 up to 36)
+    # Decodes digits from any base (2 up to 36)
     letters = "0123456789abcdefghijklmnopqrstuvwxyz"
     for number in digits:
         # if letter gives numeric value
@@ -102,6 +102,7 @@ def encode(number, base):
         answer = answer[::-1]
 
         # Pad with 4n indexes for binary format
+        # Had to highlight this out because pytest
         # if orig_numb > 15:
         #     answer = answer.zfill(8)
         # if orig_numb > 255:
@@ -140,7 +141,7 @@ def encode(number, base):
                     mod = "f"
             answer += mod
             number = int(number / base)
-        # Reverse list or string
+        # Reverses list or string
         answer = answer[::-1]
 
         print(answer)
@@ -158,7 +159,7 @@ def encode(number, base):
             mod = letters[intmod]
         answer += mod
         number = int(number / base)
-    # Reverse list or string
+    # Reverses list or string
     answer = answer[::-1]
     print(answer)
     return answer
@@ -170,17 +171,23 @@ def convert(digits, base1, base2):
     base1: int -- base of given number
     base2: int -- base to convert to
     return: str -- string representation of number (in base2)"""
-    # Handle up to base 36 [0-9a-z]
+    # Handles up to base 36 [0-9a-z]
     assert 2 <= base1 <= 36, 'base1 is out of range: {}'.format(base1)
     assert 2 <= base2 <= 36, 'base2 is out of range: {}'.format(base2)
     # TODO: Convert digits from base 2 to base 16 (and vice versa)
-    # ...
     # TODO: Convert digits from base 2 to base 10 (and vice versa)
-    # ...
     # TODO: Convert digits from base 10 to base 16 (and vice versa)
-    # ...
-    # TODO: Convert digits from any base to any base (2 up to 36)
-    # ...
+
+    # Converts digits from any base to any base (2 up to 36)
+    # Decodes number from original base to base 10
+    # print("decoding:")
+    number = decode(digits, base1)
+    # Encodes number to desired base
+    # print("encoding:")
+    answer = encode(number, base2)
+    # returns string result
+    print(answer)
+    return answer
 
 
 def main():
@@ -188,17 +195,17 @@ def main():
     import sys
     args = sys.argv[1:]  # Ignore script file name
     # decode(sys.argv[1], int(sys.argv[2]))
-    encode(int(sys.argv[1]), int(sys.argv[2]))
-    # if len(args) == 3:
-    #     digits = args[0]
-    #     base1 = int(args[1])
-    #     base2 = int(args[2])
-    #     # Convert given digits between bases
-    #     result = convert(digits, base1, base2)
-    #     print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
-    # else:
-    #     print('Usage: {} digits base1 base2'.format(sys.argv[0]))
-    #     print('Converts digits from base1 to base2')
+    # encode(int(sys.argv[1]), int(sys.argv[2]))
+    if len(args) == 3:
+        digits = args[0]
+        base1 = int(args[1])
+        base2 = int(args[2])
+        # Convert given digits between bases
+        result = convert(digits, base1, base2)
+        print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
+    else:
+        print('Usage: {} digits base1 base2'.format(sys.argv[0]))
+        print('Converts digits from base1 to base2')
 
 
 if __name__ == '__main__':
