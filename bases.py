@@ -19,20 +19,42 @@ def decode(digits, base):
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Digits length
     length = len(digits) - 1
-    print(length)
     # Return integer
     answer = 0
+
     # Decode digits from binary (base 2)
     if base is 2:
         for number in digits:
             number = int(number)
             answer += number * (base ** length)
             length -= 1
-        print(answer)
         return answer
     
     # TODO: Decode digits from hexadecimal (base 16)
-    # ...
+    if base is 16:
+        for number in digits:
+            # if letter gives value
+            if number.isalpha():
+                if number is "a":
+                    number = 10
+                if number is "b":
+                    number = 11
+                if number is "c":
+                    number = 12
+                if number is "d":
+                    number = 13
+                if number is "e":
+                    number = 14
+                if number is "f":
+                    number = 15
+            
+            number = int(number)
+            print(number)
+            answer += number * (base ** length)
+            length -= 1
+        print(answer)
+        return answer
+
     # TODO: Decode digits from any base (2 up to 36)
     # ...
 
