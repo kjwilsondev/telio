@@ -158,7 +158,7 @@ def encode(number, base):
         if intmod >= 10:
             mod = letters[intmod]
         answer += mod
-        number = int(number / base)
+        number = number // base
     # Reverses list or string
     answer = answer[::-1]
     print(answer)
@@ -184,10 +184,11 @@ def convert(digits, base1, base2):
     number = decode(digits, base1)
     # Encodes number to desired base
     # print("encoding:")
-    answer = encode(number, base2)
+    # print(encode(number, base2))
+    return encode(number, base2)
     # returns string result
-    print(answer)
-    return answer
+    # print(answer)
+    # return answer
 
 
 def main():
