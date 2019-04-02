@@ -31,6 +31,7 @@ def decode(digits, base):
             number = int(number)
             answer += number * (base ** length)
             length -= 1
+
         print(answer)
         return answer
     
@@ -56,6 +57,7 @@ def decode(digits, base):
 
             answer += number * (base ** length)
             length -= 1
+
         print(answer)
         return answer
 
@@ -68,6 +70,7 @@ def decode(digits, base):
         number = int(number)
         answer += number * (base ** length)
         length -= 1
+
     print(answer)
     return answer
 
@@ -82,13 +85,14 @@ def encode(number, base):
     # Handle unsigned numbers only for now
     assert number >= 0, 'number is negative: {}'.format(number)
     # Handle numbers above 255
-    assert number <= 255, 'number must be below 255: {}'.format(number)
+    # assert number <= 255, 'number must be below 255: {}'.format(number)
 
     # Encodes number in binary (base 2)
     if base is 2:
         # Cheating using f string
         # return '{0:08b}'.format(number)
         answer = ""
+        orig_numb = number
         while number > 0:
             # print(int(number % base))
             mod = str(number % base)
@@ -96,6 +100,19 @@ def encode(number, base):
             number = int(number / base)
         # Reverse list or string
         answer = answer[::-1]
+
+        # Pad with 4n indexes for binary format
+        # if orig_numb > 15:
+        #     answer = answer.zfill(8)
+        # if orig_numb > 255:
+        #     answer = answer.zfill(12)
+        # if orig_numb > 4095:
+        #     answer = answer.zfill(16)
+        # if orig_numb > 65535:
+        #     answer = answer.zfill(20)
+        # else: 
+        #     answer = answer.zfill(4)
+
         print(answer)
         return answer
         
@@ -125,6 +142,7 @@ def encode(number, base):
             number = int(number / base)
         # Reverse list or string
         answer = answer[::-1]
+
         print(answer)
         return answer
 
@@ -169,8 +187,8 @@ def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
     args = sys.argv[1:]  # Ignore script file name
-    decode(sys.argv[1], int(sys.argv[2]))
-    # encode(int(sys.argv[1]), int(sys.argv[2]))
+    # decode(sys.argv[1], int(sys.argv[2]))
+    encode(int(sys.argv[1]), int(sys.argv[2]))
     # if len(args) == 3:
     #     digits = args[0]
     #     base1 = int(args[1])
