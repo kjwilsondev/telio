@@ -17,7 +17,7 @@ def decode(digits, base):
     """Decode given digits in given base to number in base 10.
     digits: str -- string representation of number (in given base)
     base: int -- base of given number
-    return: int -- integer representation of number (in base 10)"""
+    return: int or float representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Return integer
@@ -29,47 +29,21 @@ def decode(digits, base):
     # Fraction detection
     if "." in digits:
         digits, fractions = digits.split(".")
-        print(f"digits: {digits}")
-        print(f"fractions: {fractions}")
+        # print(f"digits: {digits}")
+        # print(f"fractions: {fractions}")
         dlength = len(digits) - 1
         # flength = len(fractions) - 1
-        flength = 1
+        f = 1
 
-    # Decodes digits from binary (base 2)
-    # if base is 2:
-    #     for number in digits:
-    #         number = int(number)
-    #         answer += number * (base ** dlength)
-    #         dlength -= 1
-
-    #     print(answer)
-    #     return answer
-    
-    # Decodes digits from hexadecimal (base 16)
-    # if base is 16:
-    #     for number in digits:
-    #         # if letter gives value
-    #         if number.isalpha():
-    #             if number == "a":
-    #                 number = 10
-    #             if number == "b":
-    #                 number = 11
-    #             if number == "c":
-    #                 number = 12
-    #             if number == "d":
-    #                 number = 13
-    #             if number == "e":
-    #                 number = 14
-    #             if number == "f":
-    #                 number = 15
-            
-    #         number = int(number)
-
-    #         answer += number * (base ** dlength)
-    #         dlength -= 1
-
-    #     print(answer)
-    #     return answer
+        answer = float(answer)
+        # print(f"before fraction: {answer}")
+        for number in fractions:
+            # if letter gives numeric value
+            if number.isalpha():
+                number = letters.index(number)
+            number = float(number)
+            answer += number * float(base ** -f)
+            f += 1
 
     # Decodes digits from any base (2 up to 36)
     letters = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -81,27 +55,13 @@ def decode(digits, base):
         answer += number * (base ** dlength)
         dlength -= 1
 
-    if fractions:
-        answer = float(answer)
-        print(f"before fraction: {answer}")
-        decimal = 0.0
-        for number in fractions:
-            # if letter gives numeric value
-            if number.isalpha():
-                number = letters.index(number)
-            number = float(number)
-            print(f"number: {number}")
-            decimal += number * float(base ** -flength)
-            print(f"decimal: {decimal}")
-            flength += 1
-
-    print(decimal + answer)
+    print(f"answer: {answer}")
     return answer
 
 
 def encode(number, base):
     """Encode given number in base 10 to digits in given base.
-    number: int -- integer representation of number (in base 10)
+    number: int or float representation of number (in base 10)
     base: int -- base to convert to
     return: str -- string representation of number (in given base)"""
     # Handle up to base 36 [0-9a-z]
@@ -112,18 +72,18 @@ def encode(number, base):
     # assert number <= 255, 'number must be below 255: {}'.format(number)
 
     # Encodes number in binary (base 2)
-    if base is 2:
+    # if base is 2:
         # Cheating using f string
         # return '{0:08b}'.format(number)
-        answer = ""
-        orig_numb = number
-        while number > 0:
+        # answer = ""
+        # orig_numb = number
+        # while number > 0:
             # print(int(number % base))
-            mod = str(number % base)
-            answer += mod
-            number = int(number / base)
+            # mod = str(number % base)
+            # answer += mod
+            # number = int(number / base)
         # Reverse list or string
-        answer = answer[::-1]
+        # answer = answer[::-1]
 
         # Pad with 4n indexes for binary format
         # Had to highlight this out because pytest
@@ -138,43 +98,41 @@ def encode(number, base):
         # else: 
         #     answer = answer.zfill(4)
 
-        print(answer)
-        return answer
+        # print(answer)
+        # return answer
         
     # Encodes number in hexadecimal (base 16)
-    if base is 16:
+    # if base is 16:
         # Cheating using f string
         # return '{:x}'.format(number)
-        answer = ""
-        while number > 0:
-            # print(int(number % base))
-            mod = str(number % base)
-            # if mod over 10 gives alpha value
-            if int(mod) >= 10:
-                if mod == "10":
-                    mod = "a"
-                if mod == "11":
-                    mod = "b"
-                if mod == "12":
-                    mod = "c"
-                if mod == "13":
-                    mod = "d"
-                if mod == "14":
-                    mod = "e"
-                if mod == "15":
-                    mod = "f"
-            answer += mod
-            number = int(number / base)
-        # Reverses list or string
-        answer = answer[::-1]
 
-        print(answer)
+    # Turn number back into string to detect fraction
+    number = str(number)
+
+    # Fraction detection
+    if "." in str(number):
+        digit, decimal = number.split(".")
+        # print(f"digits: {digits}")
+        # print(f"fractions: {fractions}")
+
+        answer = ""
+        letters = "0123456789abcdefghijklmnopqrstuvwxyz"
+        while decimal > 0:
+            # print(int(fraction % base))
+            mod = str(decimal % base)
+            intmod = float(mod)
+            # if mod over 10 gives alpha value
+            if intmod >= 10:
+                mod = letters[intmod]
+            answer += mod
+            decimal = decimal // base
+        print(f"decimal: {decimal}")
         return answer
 
     # Encodes number in any base (2 up to 36)
     answer = ""
     letters = "0123456789abcdefghijklmnopqrstuvwxyz"
-    while number > 0:
+    while digits > 0:
         # print(int(number % base))
         mod = str(number % base)
         intmod = int(mod)
@@ -182,11 +140,13 @@ def encode(number, base):
         if intmod >= 10:
             mod = letters[intmod]
         answer += mod
-        number = number // base
+        number = number / base
+
     # Reverses list or string
     answer = answer[::-1]
     print(answer)
     return answer
+
 
 
 def convert(digits, base1, base2):
@@ -216,8 +176,8 @@ def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
     args = sys.argv[1:]  # Ignore script file name
-    decode(sys.argv[1], int(sys.argv[2]))
-    # encode(int(sys.argv[1]), int(sys.argv[2]))
+    # decode(sys.argv[1], int(sys.argv[2]))
+    encode(float(sys.argv[1]), int(sys.argv[2]))
     # if len(args) == 3:
     #     digits = args[0]
     #     base1 = int(args[1])
