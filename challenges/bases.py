@@ -20,46 +20,56 @@ def decode(digits, base):
     return: int -- integer representation of number (in base 10)"""
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
-    # Digits length
-    length = len(digits) - 1
     # Return integer
     answer = 0
 
-    # Decodes digits from binary (base 2)
-    if base is 2:
-        for number in digits:
-            number = int(number)
-            answer += number * (base ** length)
-            length -= 1
+    # Digits length
+    dlength = len(digits) - 1
+    
+    # Fraction detection
+    if "." in digits:
+        digits, fractions = digits.split(".")
+        print(f"digits: {digits}")
+        print(f"fractions: {fractions}")
+        dlength = len(digits) - 1
+        # flength = len(fractions) - 1
+        flength = 1
 
-        print(answer)
-        return answer
+    # Decodes digits from binary (base 2)
+    # if base is 2:
+    #     for number in digits:
+    #         number = int(number)
+    #         answer += number * (base ** dlength)
+    #         dlength -= 1
+
+    #     print(answer)
+    #     return answer
     
     # Decodes digits from hexadecimal (base 16)
-    if base is 16:
-        for number in digits:
-            # if letter gives value
-            if number.isalpha():
-                if number == "a":
-                    number = 10
-                if number == "b":
-                    number = 11
-                if number == "c":
-                    number = 12
-                if number == "d":
-                    number = 13
-                if number == "e":
-                    number = 14
-                if number == "f":
-                    number = 15
+    # if base is 16:
+    #     for number in digits:
+    #         # if letter gives value
+    #         if number.isalpha():
+    #             if number == "a":
+    #                 number = 10
+    #             if number == "b":
+    #                 number = 11
+    #             if number == "c":
+    #                 number = 12
+    #             if number == "d":
+    #                 number = 13
+    #             if number == "e":
+    #                 number = 14
+    #             if number == "f":
+    #                 number = 15
             
-            number = int(number)
+    #         number = int(number)
 
-            answer += number * (base ** length)
-            length -= 1
+    #         answer += number * (base ** dlength)
+    #         dlength -= 1
 
-        print(answer)
-        return answer
+    #     print(answer)
+    #     return answer
 
     # Decodes digits from any base (2 up to 36)
     letters = "0123456789abcdefghijklmnopqrstuvwxyz"
@@ -68,10 +78,24 @@ def decode(digits, base):
         if number.isalpha():
             number = letters.index(number)
         number = int(number)
-        answer += number * (base ** length)
-        length -= 1
+        answer += number * (base ** dlength)
+        dlength -= 1
 
-    print(answer)
+    if fractions:
+        answer = float(answer)
+        print(f"before fraction: {answer}")
+        decimal = 0.0
+        for number in fractions:
+            # if letter gives numeric value
+            if number.isalpha():
+                number = letters.index(number)
+            number = float(number)
+            print(f"number: {number}")
+            decimal += number * float(base ** -flength)
+            print(f"decimal: {decimal}")
+            flength += 1
+
+    print(decimal + answer)
     return answer
 
 
@@ -192,18 +216,18 @@ def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
     args = sys.argv[1:]  # Ignore script file name
-    # decode(sys.argv[1], int(sys.argv[2]))
+    decode(sys.argv[1], int(sys.argv[2]))
     # encode(int(sys.argv[1]), int(sys.argv[2]))
-    if len(args) == 3:
-        digits = args[0]
-        base1 = int(args[1])
-        base2 = int(args[2])
-        # Convert given digits between bases
-        result = convert(digits, base1, base2)
-        print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
-    else:
-        print('Usage: {} digits base1 base2'.format(sys.argv[0]))
-        print('Converts digits from base1 to base2')
+    # if len(args) == 3:
+    #     digits = args[0]
+    #     base1 = int(args[1])
+    #     base2 = int(args[2])
+    #     # Convert given digits between bases
+    #     result = convert(digits, base1, base2)
+    #     print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
+    # else:
+    #     print('Usage: {} digits base1 base2'.format(sys.argv[0]))
+    #     print('Converts digits from base1 to base2')
 
 
 if __name__ == '__main__':
