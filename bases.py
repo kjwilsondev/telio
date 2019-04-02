@@ -1,4 +1,4 @@
-#!python
+#!python3
 
 import string
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
@@ -8,6 +8,9 @@ import string
 # string.ascii_uppercase is 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 # string.ascii_letters is ascii_lowercase + ascii_uppercase
 # string.printable is digits + ascii_letters + punctuation + whitespace
+
+# f string docs
+# https://realpython.com/python-f-strings/
 
 
 def decode(digits, base):
@@ -35,17 +38,17 @@ def decode(digits, base):
         for number in digits:
             # if letter gives value
             if number.isalpha():
-                if number is "a":
+                if number == "a":
                     number = 10
-                if number is "b":
+                if number == "b":
                     number = 11
-                if number is "c":
+                if number == "c":
                     number = 12
-                if number is "d":
+                if number == "d":
                     number = 13
-                if number is "e":
+                if number == "e":
                     number = 14
-                if number is "f":
+                if number == "f":
                     number = 15
             
             number = int(number)
@@ -76,16 +79,49 @@ def encode(number, base):
     assert number <= 255, 'number must be below 255: {}'.format(number)
 
     # Encode number in binary (base 2)
-    # if base is 2:
-    #     answer = [0, 0, 0, 0, 0, 0, 0 ,0]
-    #     place = len(answer) - 1
-    #     exponent = 0
-    #     while number > 0:
-    #         number = int(number)
-    #         answer[place] = number
+    if base is 2:
+        # Cheating using f string
+        # return '{0:08b}'.format(number)
+        answer = ""
+        while number > 0:
+            # print(int(number % base))
+            mod = str(number % base)
+            answer += mod
+            number = int(number / base)
+        # Reverse list or string
+        answer = answer[::-1]
+        print(answer)
         
     # TODO: Encode number in hexadecimal (base 16)
-    # ...
+    if base is 16:
+        # Cheating using f string
+        # return '{:x}'.format(number)
+        answer = ""
+        while number > 0:
+            # print(int(number % base))
+            mod = str(number % base)
+            # if mod over 10 gives alpha value
+            if int(mod) >= 10:
+                print("ok")
+                if mod == "10":
+                    mod = "a"
+                if mod == "11":
+                    mod = "b"
+                if mod == "12":
+                    mod = "c"
+                if mod == "13":
+                    mod = "d"
+                if mod == "14":
+                    mod = "e"
+                if mod == "15":
+                    print("y")
+                    mod = "f"
+            answer += mod
+            number = int(number / base)
+        # Reverse list or string
+        answer = answer[::-1]
+        print(answer)
+
     # TODO: Encode number in any base (2 up to 36)
     # ...
 
@@ -113,7 +149,8 @@ def main():
     """Read command-line arguments and convert given digits between bases."""
     import sys
     args = sys.argv[1:]  # Ignore script file name
-    decode(sys.argv[1], int(sys.argv[2]))
+    # decode(sys.argv[1], int(sys.argv[2]))
+    encode(int(sys.argv[1]), int(sys.argv[2]))
     # if len(args) == 3:
     #     digits = args[0]
     #     base1 = int(args[1])
