@@ -25,6 +25,7 @@ def decode(digits, base):
 
     # Digits length
     dlength = len(digits) - 1
+    letters = "0123456789abcdefghijklmnopqrstuvwxyz"
     
     # Fraction detection
     if "." in digits:
@@ -46,7 +47,6 @@ def decode(digits, base):
             f += 1
 
     # Decodes digits from any base (2 up to 36)
-    letters = "0123456789abcdefghijklmnopqrstuvwxyz"
     for number in digits:
         # if letter gives numeric value
         if number.isalpha():
@@ -106,47 +106,54 @@ def encode(number, base):
         # Cheating using f string
         # return '{:x}'.format(number)
 
+    # Encodes number in any base (2 up to 36)
+
+    answer = ""
+    decimal = ""
+    letters = "0123456789abcdefghijklmnopqrstuvwxyz"
     # Turn number back into string to detect fraction
+    digit = number
     number = str(number)
+    fraction = False
 
     # Fraction detection
-    if "." in str(number):
-        digit, decimal = number.split(".")
+    if "." in number:
+        fraction = True
+        digit, part = number.split(".")
         # print(f"digits: {digits}")
         # print(f"fractions: {fractions}")
+        digit = int(digit)
+        part = float("." + part)
+        found = False
 
-        answer = ""
-        letters = "0123456789abcdefghijklmnopqrstuvwxyz"
-        while decimal > 0:
-            # print(int(fraction % base))
-            mod = str(decimal % base)
-            intmod = float(mod)
-            # if mod over 10 gives alpha value
-            if intmod >= 10:
-                mod = letters[intmod]
-            answer += mod
-            decimal = decimal // base
-        print(f"decimal: {decimal}")
-        return answer
+        while not found:
+            part *= base
+            mod = int(part)
+            decimal += str(mod)
+            part -= mod
+            if part == 0:
+                found = True
 
-    # Encodes number in any base (2 up to 36)
-    answer = ""
-    letters = "0123456789abcdefghijklmnopqrstuvwxyz"
-    while digits > 0:
+    while digit > 0:
         # print(int(number % base))
-        mod = str(number % base)
+        mod = str(digit % base)
         intmod = int(mod)
         # if mod over 10 gives alpha value
         if intmod >= 10:
             mod = letters[intmod]
         answer += mod
-        number = number / base
+        digit = digit // base
 
     # Reverses list or string
     answer = answer[::-1]
+    # Adds decimal to answer
+    if fraction:
+        # Dont put decimal if its just zero
+        if not float(decimal) == 0.0:
+            answer += "." + decimal
+            
     print(answer)
     return answer
-
 
 
 def convert(digits, base1, base2):
@@ -177,17 +184,17 @@ def main():
     import sys
     args = sys.argv[1:]  # Ignore script file name
     # decode(sys.argv[1], int(sys.argv[2]))
-    encode(float(sys.argv[1]), int(sys.argv[2]))
-    # if len(args) == 3:
-    #     digits = args[0]
-    #     base1 = int(args[1])
-    #     base2 = int(args[2])
-    #     # Convert given digits between bases
-    #     result = convert(digits, base1, base2)
-    #     print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
-    # else:
-    #     print('Usage: {} digits base1 base2'.format(sys.argv[0]))
-    #     print('Converts digits from base1 to base2')
+    # encode(float(sys.argv[1]), int(sys.argv[2]))
+    if len(args) == 3:
+        digits = args[0]
+        base1 = int(args[1])
+        base2 = int(args[2])
+        # Convert given digits between bases
+        result = convert(digits, base1, base2)
+        print('{} in base {} is {} in base {}'.format(digits, base1, result, base2))
+    else:
+        print('Usage: {} digits base1 base2'.format(sys.argv[0]))
+        print('Converts digits from base1 to base2')
 
 
 if __name__ == '__main__':
