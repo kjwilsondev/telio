@@ -128,9 +128,11 @@ def encode(number, base):
 
         while not found:
             part *= base
-            mod = int(part)
-            decimal += str(mod)
-            part -= mod
+            intpart = int(part)
+            part -= intpart
+            if intpart >= 10:
+                intpart = letters[intpart]
+            decimal += str(intpart)
             if part == 0:
                 found = True
 
@@ -149,7 +151,7 @@ def encode(number, base):
     # Adds decimal to answer
     if fraction:
         # Dont put decimal if its just zero
-        if not float(decimal) == 0.0:
+        if not decimal == "0":
             answer += "." + decimal
             
     print(answer)
