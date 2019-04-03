@@ -1,6 +1,9 @@
 #!python3
+# to run pytest:
+# python3 -m pytest bases_test.py
 
 import string
+from decimal import Decimal
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
 # string.digits is '0123456789'
 # string.hexdigits is '0123456789abcdefABCDEF'
@@ -37,13 +40,23 @@ def decode(digits, base):
         f = 1
 
         answer = float(answer)
+        print(f"1 answer: {answer}")
         # print(f"before fraction: {answer}")
         for number in fractions:
+            print(f"1 number: {number}")
             # if letter gives numeric value
             if number.isalpha():
                 number = letters.index(number)
-            number = float(number)
-            answer += number * float(base ** -f)
+                print(f"2 number: {number}")
+            number = int(number)
+            print(f"2 answer: {answer}")
+            print(f"3 number: {number}")
+            # get rid of superfluous zeroes
+            result = str(number * (base ** -f))
+            result = float(result.strip('0'))
+            # encoding in base 10 gives trailing zeroes :(
+            answer += result
+            print(f"3 answer: {answer}")
             f += 1
 
     # Decodes digits from any base (2 up to 36)
@@ -55,7 +68,7 @@ def decode(digits, base):
         answer += number * (base ** dlength)
         dlength -= 1
 
-    print(f"answer: {answer}")
+    print(f"base 10: {answer}")
     return answer
 
 
@@ -67,7 +80,7 @@ def encode(number, base):
     # Handle up to base 36 [0-9a-z]
     assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
     # Handle unsigned numbers only for now
-    assert number >= 0, 'number is negative: {}'.format(number)
+    # assert number >= 0, 'number is negative: {}'.format(number)
     # Handle numbers above 255
     # assert number <= 255, 'number must be below 255: {}'.format(number)
 
@@ -75,15 +88,18 @@ def encode(number, base):
     # if base is 2:
         # Cheating using f string
         # return '{0:08b}'.format(number)
-        # answer = ""
-        # orig_numb = number
-        # while number > 0:
-            # print(int(number % base))
-            # mod = str(number % base)
-            # answer += mod
-            # number = int(number / base)
-        # Reverse list or string
-        # answer = answer[::-1]
+
+        # ATTEMPTED TO ENCODE NEGATIVE NUMBERS
+        # number = str(number)
+        # print(f"turned number to string: {number}")
+        # # reverse the whole thing
+        # number = number[::-1]
+        # print(f"reverse the number: {number}")
+        # # get the index for the first
+        # if "1" in 
+        # inverse everything after that
+        # reverse it back
+        
 
         # Pad with 4n indexes for binary format
         # Had to highlight this out because pytest
@@ -125,6 +141,7 @@ def encode(number, base):
         digit = int(digit)
         part = float("." + part)
         found = False
+        okjuststop = False
 
         while not found:
             part *= base
@@ -133,7 +150,15 @@ def encode(number, base):
             if intpart >= 10:
                 intpart = letters[intpart]
             decimal += str(intpart)
+            print(part)
             if part == 0:
+                found = True
+            
+            print("trying to get 1")
+            okjuststop += 1
+
+            # stops while loop for endless decimal
+            if okjuststop > 50:
                 found = True
 
     while digit > 0:
@@ -154,7 +179,7 @@ def encode(number, base):
         if not decimal == "0":
             answer += "." + decimal
             
-    print(answer)
+    print(f"base {base}: {answer}")
     return answer
 
 
