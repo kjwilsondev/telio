@@ -84,22 +84,10 @@ def encode(number, base):
     # Handle numbers above 255
     # assert number <= 255, 'number must be below 255: {}'.format(number)
 
-    # Encodes number in binary (base 2)
+    # Encodes number to binary (base 2)
     # if base is 2:
         # Cheating using f string
         # return '{0:08b}'.format(number)
-
-        # ATTEMPTED TO ENCODE NEGATIVE NUMBERS
-        # number = str(number)
-        # print(f"turned number to string: {number}")
-        # # reverse the whole thing
-        # number = number[::-1]
-        # print(f"reverse the number: {number}")
-        # # get the index for the first
-        # if "1" in 
-        # inverse everything after that
-        # reverse it back
-        
 
         # Pad with 4n indexes for binary format
         # Had to highlight this out because pytest
@@ -178,6 +166,26 @@ def encode(number, base):
         # Dont put decimal if its just zero
         if not decimal == "0":
             answer += "." + decimal
+
+    # TODO: make negative number function
+    # ATTEMPTED TO ENCODE NEGATIVE NUMBERS
+    # checks if number is negative
+    # if float(number) > 0:
+    #     # checks if number is binary
+    #     if base == 2:
+    #         number = str(number)
+    #         print(f"turned number to string: {number}")
+    #         # reverse the whole thing
+    #         number = number[::-1]
+    #         print(f"reverse the number: {number}")
+    #         # get the index for the first
+    #         if "1" in number:
+    #             switch = number.index("1")
+    #             (f"index to switch at: {index}")
+    #             invert = 
+    #             # inverse everything after that
+    #             for binary in number:
+    # reverse it back
             
     print(f"base {base}: {answer}")
     return answer
