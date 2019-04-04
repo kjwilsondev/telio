@@ -171,21 +171,79 @@ def encode(number, base):
     # ATTEMPTED TO ENCODE NEGATIVE NUMBERS
     # checks if number is negative
     # if float(number) > 0:
-    #     # checks if number is binary
-    #     if base == 2:
-    #         number = str(number)
-    #         print(f"turned number to string: {number}")
-    #         # reverse the whole thing
-    #         number = number[::-1]
-    #         print(f"reverse the number: {number}")
-    #         # get the index for the first
-    #         if "1" in number:
-    #             switch = number.index("1")
-    #             (f"index to switch at: {index}")
-    #             invert = 
-    #             # inverse everything after that
-    #             for binary in number:
-    # reverse it back
+            
+    print(f"base {base}: {answer}")
+    return answer
+
+def encodeNegative(number, base):
+    """Encode given number in base 10 to digits in given base.
+    number: int or float representation of number (in base 10)
+    base: int -- base to convert to
+    return: str -- string representation of number (in given base)"""
+    # Handle up to base 36 [0-9a-z]
+    assert 2 <= base <= 36, 'base is out of range: {}'.format(base)
+
+    # Encodes number in any base (2 up to 36)
+
+    answer = ""
+    decimal = ""
+    letters = "0123456789abcdefghijklmnopqrstuvwxyz"
+    # Turn number back into string to detect fraction
+    digit = number
+    number = str(number)
+    fraction = False
+
+    # Fraction detection
+    if "." in number:
+        fraction = True
+        digit, part = number.split(".")
+        # print(f"digits: {digits}")
+        # print(f"fractions: {fractions}")
+        digit = int(digit)
+        part = float("." + part)
+        found = False
+        okjuststop = False
+
+        while not found:
+            part *= base
+            intpart = int(part)
+            part -= intpart
+            if intpart >= 10:
+                intpart = letters[intpart]
+            decimal += str(intpart)
+            print(part)
+            if part == 0:
+                found = True
+            
+            print("trying to get 1")
+            okjuststop += 1
+
+            # stops while loop for endless decimal
+            if okjuststop > 50:
+                found = True
+
+    while digit > 0:
+        # print(int(number % base))
+        mod = str(digit % base)
+        intmod = int(mod)
+        # if mod over 10 gives alpha value
+        if intmod >= 10:
+            mod = letters[intmod]
+        answer += mod
+        digit = digit // base
+
+    # Reverses list or string
+    answer = answer[::-1]
+    # Adds decimal to answer
+    if fraction:
+        # Dont put decimal if its just zero
+        if not decimal == "0":
+            answer += "." + decimal
+
+    # TODO: make negative number function
+    # ATTEMPTED TO ENCODE NEGATIVE NUMBERS
+    # checks if number is negative
+    # if float(number) > 0:
             
     print(f"base {base}: {answer}")
     return answer
