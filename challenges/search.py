@@ -35,11 +35,10 @@ def linear_search_recursive(array, item, index=0):
 
 def binary_search(array, item):
     """return the index of item in sorted array or None if item is not found"""
-    # implement binary_search_iterative and binary_search_recursive below, then
-    # change this to call your implementation to verify it passes all tests
-    return binary_search_iterative(array, item)
-    # return binary_search_iterative(array, item)
-    # return binary_search_recursive(array, item)
+    # Edge Casing
+    if item > array[len(array)-1] or item < array[0]:
+        return None
+    return binary_search_recursive(array, item)
 
 
 def binary_search_iterative(array, item):
@@ -52,6 +51,7 @@ def binary_search_iterative(array, item):
         print(f"middle: {middle}")
         val = array[middle]
         print(f"val: {val}")
+
         # check if item found
         if val == item:
             return middle
@@ -69,8 +69,30 @@ def binary_search_iterative(array, item):
 
 
 def binary_search_recursive(array, item, left=None, right=None):
-    # TODO: implement binary search recursively here
-    pass
+    # Implements binary search recursively here
+    
+    # Initializes left and right
+    if left == None:
+        left = 0
+        right = len(array) - 1
+
+    # set median
+    middle = (left + right) // 2
+    val = array[middle]
+
+    # check if item found
+    if val == item:
+        return middle
+    if val < item:
+        left = middle + 1
+        return binary_search_recursive(array, item, left, right)
+    elif val > item:
+        right = middle - 1
+        return binary_search_recursive(array, item, left, right)
+
+    # returns None if not found
+    return None
+    
     # once implemented, change binary_search to call binary_search_recursive
     # to verify that your recursive implementation passes all tests
 
@@ -80,7 +102,7 @@ if __name__ == '__main__':
     if len(args) == 1:
         array = [1, 2, 3, 4, 5, 6, 7]
         item = int(args[0])
-        result = binary_search_iterative(array, item)
+        result = binary_search(array, item)
         print(f"Looked for {item} in {array}")
         print(f"It was found at {result}")
     else:
