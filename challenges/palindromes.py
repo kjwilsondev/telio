@@ -1,4 +1,4 @@
-#!python
+#!python3
 
 import string
 # Hint: Use these string constants to ignore capitalization and/or punctuation
@@ -13,32 +13,44 @@ def is_palindrome(text):
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str), 'input is not a string: {}'.format(text)
-    return is_palindrome_iterative(text)
+    return is_palindrome_recursive(text)
     # return is_palindrome_recursive(text)
 
 
 def is_palindrome_iterative(text):
-    # TODO: implement the is_palindrome function iteratively here
+    # fix text to pass test
+    text = text.lower()
+    text = text.translate(str.maketrans('','', string.punctuation))
+    print(text)
+    # Set indexes at opposite ends
     left = 0
     right = len(text) - 1
     # Loops until indexes meet
     while left <= right:
-        print(text[left])
-        print(text[right])
+        # Check for match
         if text[left] != text[right]:
             return False
         left += 1
         right -= 1
-    print("this is true!")
     return True
 
 
 def is_palindrome_recursive(text, left=None, right=None):
-    # TODO: implement the is_palindrome function recursively here
-    if left == None:
+    # fix text to pass test
+    text = text.lower()
+    text = text.translate(str.maketrans('','', string.punctuation))
+    print(text)
+    # Initializes indexes
+    if right == None:
         left = 0
-    # once implemented, change is_palindrome to call is_palindrome_recursive
-    # to verify that your iterative implementation passes all tests
+        right = len(text) - 1
+    # Checks if indexes have met
+    if left <= right:
+        # Check if indexes are same
+        if text[left] == text[right]:
+            return is_palindrome_recursive(text, left+1, right-1)
+        return False
+    return True
 
 
 def main():
@@ -56,5 +68,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-    is_palindrome(' ')
+    main()
