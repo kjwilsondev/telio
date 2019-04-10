@@ -17,11 +17,12 @@ def contains(text, pattern, letter=None, patterndex=0):
     while text[letter] != pattern[patterndex]:
         letter += 1
         if letter >= len(text) - 1:
+            print("nope")
             return False
     
     # Checks if next letter in text
     # matches the next letter in the pattern
-    if text[letter+1] != pattern[patterndex+1]:
+    if text[letter] != pattern[patterndex]:
         # if not sends it back to while loop with new start
         return contains(text, pattern, letter)
     return contains(text, pattern, letter+1, patterndex+1)
@@ -73,4 +74,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    contains('Here is some text', 'yikes')
