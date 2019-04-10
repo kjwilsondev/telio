@@ -1,9 +1,13 @@
-#!python
+#!python3
 
 def contains(text, pattern, letter=None, patterndex=0):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """
+    Recursive Implementation
+    Return a boolean indicating whether pattern occurs in text.
+    """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
+
     # Initialize values
     if letter is None:
         letter = 0
@@ -28,20 +32,67 @@ def contains(text, pattern, letter=None, patterndex=0):
     return contains(text, pattern, letter+1, patterndex+1)
 
 
-def find_index(text, pattern):
-    """Return the starting index of the first occurrence of pattern in text,
-    or None if not found."""
+def find_index(text, pattern, letter=None, patterndex=0):
+    """
+    Recursive Implementation
+    Returns the starting index of the first occurrence of pattern in text,
+    or None if not found.
+    """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_index here (iteratively and/or recursively)
+    
+    # Initialize values
+    if letter is None:
+        letter = 0
+
+    if patterndex == len(pattern):
+        print("yup !!!")
+        print(letter-patterndex)
+        return letter - patterndex
+    
+    # Skips over letters 
+    # that dont match first letter of pattern
+    while text[letter] != pattern[patterndex]:
+        letter += 1
+        if letter >= len(text) - 1:
+            print("nope")
+            return None
+    
+    # Checks if next letter in text
+    # matches the next letter in the pattern
+    if text[letter] != pattern[patterndex]:
+        # if not sends it back to while loop with new start
+        return find_index(text, pattern, letter)
+    return find_index(text, pattern, letter+1, patterndex+1)
 
 
 def find_all_indexes(text, pattern):
-    """Return a list of starting indexes of all occurrences of pattern in text,
-    or an empty list if not found."""
+    """
+    Iterative Implementation
+    """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    # Initialize values and index array
+    indarray = []
+    patterndex = 0
+
+    # File through each letter in text
+    for i, letter in enumerate(text):
+        # if letter match is found
+        if letter == pattern[patterndex]:
+            patterndex += 1
+        else:
+            patterndex = 0
+        # if pattern index reaches full length
+        # pattern was found !
+        if patterndex == len(pattern):
+            indarray.append(i - (len(pattern) - 1))
+            patterndex = 0
+
+    # Returns index array
+    return indarray
+
+
 
 
 def test_string_algorithms(text, pattern):
@@ -75,4 +126,4 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    contains('Here is some text', 'yikes')
+    find_all_indexes('kdjasldjf;alksdjf;alksjdf;laksjdfl;kajsd;flkjas;dlfkjas;ldfjk', 'kj')
