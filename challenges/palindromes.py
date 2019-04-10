@@ -24,6 +24,7 @@ def is_palindrome_iterative(text):
     # Loops until indexes meet
     while left <= right:
         # Ignore space and punctuation
+        # https://www.dotnetperls.com/punctuation-python
         while text[left] == " " or text[left] in string.punctuation:
             left += 1
         while text[right] == " " or text[right] in string.punctuation:
