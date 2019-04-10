@@ -35,19 +35,14 @@ def linear_search_recursive(array, item, index=0):
 
 def binary_search(array, item):
     """return the index of item in sorted array or None if item is not found"""
-    # Edge Casing
-    # if item > array[len(array)-1] or item < array[0]:
-    #     return None
-    # else:
-        array = array.sort()
-        print(array)
-        return binary_search_recursive(array, item)
+    return binary_search_recursive(array, item)
 
 
 def binary_search_iterative(array, item):
     # TODO: implement binary search iteratively here
     left = 0
     right = len(array) - 1
+
     while left <= right:
         # set median
         middle = (left + right) // 2
@@ -64,6 +59,10 @@ def binary_search_iterative(array, item):
         elif val > item:
             right = middle - 1
             print(f"new right: {right}")
+        if left == right:
+            if array[left] == item:
+                return left
+            return None
     
     # returns None if not found
     return None
@@ -81,6 +80,10 @@ def binary_search_recursive(array, item, left=None, right=None):
     if right == None:
         left = 0
         right = len(array) - 1
+        
+    # Checks if indexes have met
+    if left > right:
+        return None
 
     # set median
     middle = (left + right) // 2
