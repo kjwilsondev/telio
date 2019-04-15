@@ -21,13 +21,16 @@ def is_palindrome_iterative(text):
     # Set indexes at opposite ends
     left = 0
     right = len(text) - 1
+
+    punctuation = set(string.punctuation)
+
     # Loops until indexes meet
     while left <= right:
         # Ignore space and punctuation
         # https://www.dotnetperls.com/punctuation-python
-        while text[left] == " " or text[left] in string.punctuation:
+        while text[left] == " " or text[left] in punctuation:
             left += 1
-        while text[right] == " " or text[right] in string.punctuation:
+        while text[right] == " " or text[right] in punctuation:
             right -= 1
         # Check for match
         if text[left].lower() != text[right].lower():
@@ -41,6 +44,7 @@ def is_palindrome_recursive(text, left=None, right=None):
     # fix text to pass test
     # text = text.lower()
     # text = text.translate(str.maketrans('','', string.punctuation))
+    punctuation = set(string.punctuation)
 
     # Initializes indexes
     if right == None:
@@ -49,9 +53,9 @@ def is_palindrome_recursive(text, left=None, right=None):
     # Checks if indexes have met
     if left <= right:
         # Checks if index contains punctuation or space
-        if text[left] == " " or text[left] in string.punctuation:
+        if text[left] == " " or text[left] in punctuation:
             return is_palindrome_recursive(text, left+1, right)
-        if text[right] == " " or text[right] in string.punctuation:
+        if text[right] == " " or text[right] in punctuation:
             return is_palindrome_recursive(text, left, right-1)
         # Check if indexes are same (ignores caps)
         if text[left].lower() == text[right].lower():
