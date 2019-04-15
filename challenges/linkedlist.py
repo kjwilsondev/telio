@@ -3,9 +3,12 @@
 class Node(object):
 
     def __init__(self, data):
-        """Initialize this node with the given data."""
+        """
+        Initializes this node with the given data
+        """
         self.data = data
         self.next = None
+        self.previous = None
 
     def __repr__(self):
         """Return a string representation of this node."""
@@ -15,7 +18,9 @@ class Node(object):
 class LinkedList(object):
 
     def __init__(self, iterable=None):
-        """Initialize this linked list and append the given items, if any."""
+        """
+        Initializes this linked list and append the given items, if any
+        """
         self.head = None  # First node
         self.tail = None  # Last node
         self.size = 0  # Number of nodes
@@ -25,18 +30,26 @@ class LinkedList(object):
                 self.append(item)
 
     def __str__(self):
-        """Return a formatted string representation of this linked list."""
+        """
+        Returns a formatted string representation of this linked list
+        """
         items = ['({!r})'.format(item) for item in self.items()]
         return '[{}]'.format(' -> '.join(items))
 
     def __repr__(self):
-        """Return a string representation of this linked list."""
+        """
+        Returns a string representation of this linked list
+        """
         return 'LinkedList({!r})'.format(self.items())
 
     def items(self):
-        """Return a list of all items in this linked list.
-        Best and worst case running time: Theta(n) for n items in the list
-        because we always need to loop through all n nodes."""
+        """
+        Returns a list of all items in this linked list.
+
+        Best and worst case running time: 
+        Theta(n) for n items in the list
+        because we always need to loop through all n nodes
+        """
         # Create an empty list of results
         result = []  # Constant time to create a new list
         # Start at the head node
@@ -51,34 +64,48 @@ class LinkedList(object):
         return result  # Constant time to return a list
 
     def is_empty(self):
-        """Return True if this linked list is empty, or False."""
-        return self.head is None
+        """
+        Returns True if this linked list is empty, or False
+        """
+        return self.head is None # Constant time to access self.head
 
     def length(self):
-        """Return the length of this linked list by traversing its nodes.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
-        # Node counter initialized to zero
-        node_count = 0
-        # Start at the head node
-        node = self.head
-        # Loop until the node is None, which is one node too far past the tail
-        while node is not None:
-            # Count one for this node
-            node_count += 1
-            # Skip to the next node
-            node = node.next
-        # Now node_count contains the number of nodes
-        return node_count
+        """
+        Return the length of this linked list
+
+        Best and worst case running time: 
+        O(1) because we are only accessing size attribute
+        """
+        return self.size # Constant time to access self.size
 
     def get_at_index(self, index):
-        """Return the item at the given index in this linked list, or
-        raise ValueError if the given index is out of range of the list size.
+        """
+        Finds the node at the given index and return its data
+        or
+        raises ValueError if the given index is out of range of the list size
+
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
-        # TODO: Find the node at the given index and return its data
+
+        # TODO: Make if statements that finds whether index is closer to head or tail
+        #       in order to transverse forwards or backwards
+        
+        # Node counter initialized to index
+        node_count = index
+        # Start at the head node
+        node = self.head
+        # Loops until the node is at target index
+        while node_count > 0:
+            # Skip to the next node
+            node = node.next
+            data = node.data
+            # Count down
+            node_count -= 1
+        # Now node_count contains the number of nodes
+        return data
 
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
@@ -92,7 +119,8 @@ class LinkedList(object):
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: 
+        O(1) [TODO]"""
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
