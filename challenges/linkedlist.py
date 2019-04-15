@@ -74,7 +74,7 @@ class LinkedList(object):
         Return the length of this linked list
 
         Best and worst case running time: 
-        O(1) because we are only accessing size attribute
+        O(1) because function is only accessing size attribute
         """
         return self.size # Constant time to access self.size
 
@@ -84,15 +84,26 @@ class LinkedList(object):
         or
         raises ValueError if the given index is out of range of the list size
 
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: 
+        O(1) if index is head or tail
+
+        Worst case running time: 
+        O(n) when transversal is neccessary
+        (especially the second to last item!)
+        """
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
 
         # TODO: Make if statements that finds whether index is closer to head or tail
         #       in order to transverse forwards or backwards
-        
+
+        # Avoiding transversal if item is easily accessible
+        if index == 0:
+            return self.head.data
+        if index == (self.size - 1):
+            return self.tail.data
+
         # Node counter initialized to index
         node_count = index
         # Start at the head node
@@ -108,14 +119,62 @@ class LinkedList(object):
         return data
 
     def insert_at_index(self, index, item):
-        """Insert the given item at the given index in this linked list, or
-        raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Finds the node before the given index and inserts item after it
+        or
+        raises ValueError if the given index is out of range of the list size
+
+        Best case running time: 
+        ??? under what conditions? [TODO]
+
+        Worst case running time: 
+        ??? under what conditions? [TODO]"""
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
-        # TODO: Find the node before the given index and insert item after it
+
+        # New node initialized
+        new_node = Node(item)
+
+        # Avoiding transversal if item is easily accessible
+        if index == 0:
+            new_node.next = self.head
+            self.head = new_node
+            return
+
+        if index == (self.size - 1):
+            self.tail.next = new_node
+            new_node.previous = self.tail
+            self.tail = new_node
+            return
+
+        # TODO: Make if statements that finds whether index is closer to head or tail
+        #       in order to transverse forwards or backwards
+
+        # Node counter initialized to index - 1
+        node_count = index - 1
+        # Start at the head node
+        old_node = self.head
+        next_node = None
+        # Loops until the node is at target index
+        while node_count > 0:
+            # Skip to the next node
+            old_node = node.next
+            next_node = node.next
+            # Count down
+            node_count -= 1
+        
+        # Set new node's next to next node
+        new_node.next = next_node
+        # Set next node's previous to new node
+        next_node.previous = new_node
+        # Set new node's previous to old node
+        new_node.previous = old_node
+        # Lastly, set old node's next to new node
+        old_node.next = new_node
+
+        # Node has been inserted to linked list!
+        return
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
