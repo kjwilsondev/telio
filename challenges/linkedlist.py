@@ -128,7 +128,8 @@ class LinkedList(object):
         ??? under what conditions? [TODO]
 
         Worst case running time: 
-        ??? under what conditions? [TODO]"""
+        ??? under what conditions? [TODO]
+        """
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
@@ -159,8 +160,8 @@ class LinkedList(object):
         # Loops until the node is at target index
         while node_count > 0:
             # Skip to the next node
-            old_node = node.next
-            next_node = node.next
+            old_node = old_node.next
+            next_node = old_node.next
             # Count down
             node_count -= 1
         
@@ -189,8 +190,10 @@ class LinkedList(object):
         else:
             # Otherwise insert new node after tail
             self.tail.next = new_node
+            new_node.previous = self.tail
         # Update tail to new node regardless
         self.tail = new_node
+        self.size += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -204,8 +207,11 @@ class LinkedList(object):
         else:
             # Otherwise insert new node before head
             new_node.next = self.head
+            self.head.previous = new_node.next
+
         # Update head to new node regardless
         self.head = new_node
+        self.size += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
