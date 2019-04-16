@@ -65,10 +65,11 @@ class LinkedStack(object):
         """
         # Remove and return top item, if any
         if self.list.is_empty():
-            return None
-        yield self.list.head.data
+            raise ValueError('Stack is empty')
+        data = self.list.head.data
         self.list.head = self.list.head.next
         self.list.size -= 1
+        return data
 
 
 # Implement ArrayStack below, then change the assignment at the bottom
@@ -79,6 +80,7 @@ class ArrayStack(object):
         """Initialize this stack and push the given items, if any."""
         # Initialize a new list (dynamic array) to store the items
         self.list = list()
+        self.size = 0
         if iterable is not None:
             for item in iterable:
                 self.push(item)
@@ -96,21 +98,26 @@ class ArrayStack(object):
         False, if otherwise
         """
         # Check if empty
-        return len(self.list) == 0
+        # return len(self.list) == 0
+        return self.size == 0
 
     def length(self):
         """
         Returns the number of items in this stack
         """
         # Count number of items
-        return len(self.list)
+        # return len(self.list)
+        return self.size
 
     def push(self, item):
         """
         Inserts the given item on the top of this stack
 
-        Running time: O(???) – Why? [TODO]"""
+        Running time: O(n) – insert function requires transversal of indexes
+        https://wiki.python.org/moin/TimeComplexity
+        """
         # Insert given item
+        self.size += 1
         return self.list.insert(0, item)
 
     def peek(self):
@@ -120,22 +127,25 @@ class ArrayStack(object):
         None if this stack is empty
         """
         # Return top item, if any
-        if self.list.is_empty():
+        if self.is_empty():
             return None
         return self.list[0]
 
 
     def pop(self):
-        """Remove and return the item on the top of this stack,
-        or raise ValueError if this stack is empty.
-        Running time: O(???) – Why? [TODO]"""
+        """
+        Remove and return the item on the top of this stack,
+        or 
+        raise ValueError if this stack is empty.
+        Running time: O(1) – pop function does not require transversal"""
         # Remove and return top item, if any
-        if self.list.is_empty():
-            return None
+        if self.is_empty():
+            raise ValueError('Stack is empty')
+        self.size -= 1
         return self.list.pop(0)
 
 
 # Implement LinkedStack and ArrayStack above, then change the assignment below
 # to use each of your Stack implementations to verify they each pass all tests
-Stack = LinkedStack
-# Stack = ArrayStack
+# Stack = LinkedStack
+Stack = ArrayStack
