@@ -125,10 +125,10 @@ class LinkedList(object):
         raises ValueError if the given index is out of range of the list size
 
         Best case running time: 
-        ??? under what conditions? [TODO]
+        O(1) - when index is 0 or the length of the linked list
 
         Worst case running time: 
-        ??? under what conditions? [TODO]
+        O(n) - transversing through n-1 items
         """
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
@@ -139,15 +139,15 @@ class LinkedList(object):
 
         # Avoiding transversal if item is easily accessible
         if index == 0:
-            new_node.next = self.head
-            self.head = new_node
-            return
+            # new_node.next = self.head
+            # self.head = new_node
+            return self.prepend(item)
 
-        if index == (self.size - 1):
-            self.tail.next = new_node
-            new_node.previous = self.tail
-            self.tail = new_node
-            return
+        if index == self.size:
+            # self.tail.next = new_node
+            # new_node.previous = self.tail
+            # self.tail = new_node
+            return self.append(item)
 
         # TODO: Make if statements that finds whether index is closer to head or tail
         #       in order to transverse forwards or backwards
@@ -173,14 +173,19 @@ class LinkedList(object):
         new_node.previous = old_node
         # Lastly, set old node's next to new node
         old_node.next = new_node
+        # Add to size
+        self.size += 1
 
         # Node has been inserted to linked list!
         return
 
     def append(self, item):
-        """Insert the given item at the tail of this linked list.
+        """
+        Inserts the given item at the tail of linked list
+
         Best and worst case running time: 
-        O(1) [TODO]"""
+        O(1) because there is no transversal - strictly changing attributes
+        """
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -196,8 +201,12 @@ class LinkedList(object):
         self.size += 1
 
     def prepend(self, item):
-        """Insert the given item at the head of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Insert the given item at the head of this linked list.
+
+        Best and worst case running time: 
+        O(1) because there is no transversal - strictly changing attributes
+        """
         # Create a new node to hold the given item
         new_node = Node(item)
         # Check if this linked list is empty
@@ -207,17 +216,23 @@ class LinkedList(object):
         else:
             # Otherwise insert new node before head
             new_node.next = self.head
-            self.head.previous = new_node.next
+            self.head.previous = new_node
 
         # Update head to new node regardless
         self.head = new_node
         self.size += 1
 
     def find(self, quality):
-        """Return an item from this linked list satisfying the given quality.
-        Best case running time: Omega(1) if item is near the head of the list.
-        Worst case running time: O(n) if item is near the tail of the list or
-        not present and we need to loop through all n nodes in the list."""
+        """
+        Returns an item from this linked list satisfying the given quality.
+        
+        Best case running time: 
+        Omega(1) if item is near the head of the list.
+        
+        Worst case running time: 
+        O(n) if item is near the tail of the list or
+        not present and we need to loop through all n nodes in the list
+        """
         # Start at the head node
         node = self.head  # Constant time to assign a variable reference
         # Loop until the node is None, which is one node too far past the tail
@@ -232,18 +247,37 @@ class LinkedList(object):
         return None  # Constant time to return None
 
     def replace(self, old_item, new_item):
-        """Replace the given old_item in this linked list with given new_item
-        using the same node, or raise ValueError if old_item is not found.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
-        # TODO: Find the node containing the given old_item and replace its
-        # data with new_item, without creating a new node object
-        pass
+        """
+        Find the node containing the given old_item
+        replace data with new_item, without creating a new node object
+        or
+        raise ValueError if old_item is not found
+
+        Best case running time:
+        ??? under what conditions? [TODO]
+
+        Worst case running time: 
+        ??? under what conditions? [TODO]
+        """
+        # Start at the head node
+        node = self.head
+        # Loop until the node is None, which is one node too far past the tail
+        while node is not None:
+            # Check if this node's data satisfies the given quality function
+            if node.data == old_item:
+                # Change node data to new_item
+                node.data = new_item
+                return
+            # Skip to the next node
+            node = node.next  # Constant time to reassign a variable
+        # We never found data satisfying quality, but have to return something
+        raise ValueError('Value not found: {}'.format(old_item))  # Constant time to return None
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
+
         # Start at the head node
         node = self.head
         # Keep track of the node before the one containing the given item
@@ -268,12 +302,16 @@ class LinkedList(object):
                 previous.next = node.next
                 # Unlink the found node from its next node
                 node.next = None
+                self.size -= 1
+                return
             # Check if we found a node at the head
             if node is self.head:
                 # Update head to the next node
                 self.head = node.next
                 # Unlink the found node from the next node
                 node.next = None
+                self.size -= 1
+                return
             # Check if we found a node at the tail
             if node is self.tail:
                 # Check if there is a node before the found node
@@ -282,6 +320,8 @@ class LinkedList(object):
                     previous.next = None
                 # Update tail to the previous node regardless
                 self.tail = previous
+                self.size -= 1
+                return
         else:
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))
@@ -311,8 +351,10 @@ def test_linked_list():
     print('Deleting items:')
     ll.delete('B')
     print(ll)
+    print('size: {}'.format(ll.size))
     ll.delete('C')
     print(ll)
+    print('size: {}'.format(ll.size))
     ll.delete('A')
     print(ll)
     print('head: {}'.format(ll.head))
