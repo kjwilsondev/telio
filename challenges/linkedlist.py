@@ -296,13 +296,13 @@ class LinkedList(object):
                 node = node.next
         # Check if we found the given item or we never did and reached the tail
         if found:
+            self.size -= 1
             # Check if we found a node in the middle of this linked list
             if node is not self.head and node is not self.tail:
                 # Update the previous node to skip around the found node
                 previous.next = node.next
                 # Unlink the found node from its next node
                 node.next = None
-                self.size -= 1
                 return
             # Check if we found a node at the head
             if node is self.head:
@@ -310,8 +310,6 @@ class LinkedList(object):
                 self.head = node.next
                 # Unlink the found node from the next node
                 node.next = None
-                self.size -= 1
-                return
             # Check if we found a node at the tail
             if node is self.tail:
                 # Check if there is a node before the found node
@@ -320,8 +318,6 @@ class LinkedList(object):
                     previous.next = None
                 # Update tail to the previous node regardless
                 self.tail = previous
-                self.size -= 1
-                return
         else:
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))
