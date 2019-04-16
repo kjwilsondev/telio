@@ -131,9 +131,13 @@ class ArrayQueue(object):
         return self.list[self.size - 1]
 
     def dequeue(self):
-        """Remove and return the item at the front of this queue,
-        or raise ValueError if this queue is empty.
-        Running time: O(???) – Why? [TODO]"""
+        """
+        Remove and return the item at the front of this queue
+        or 
+        raise ValueError if this queue is empty
+
+        Running time: O(1) – pop function does not require transversal
+        """
         # Remove and return front item, if any
         if self.is_empty():
             raise ValueError('Stack is empty')

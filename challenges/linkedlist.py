@@ -42,6 +42,26 @@ class LinkedList(object):
         """
         return 'LinkedList({!r})'.format(self.items())
 
+    def __iter__(self):
+        """
+        Returns a string representation of node data
+        """
+        # return 'LinkedList({!r})'.format(self.generator())
+        return self.generator()
+
+    def generator(self):
+        """
+        Returns node data
+        """
+        # Initialize node to first node
+        node = self.head
+        # Traverse through node list
+        while node is not None:
+            # https://www.geeksforgeeks.org/use-yield-keyword-instead-return-keyword-python/
+            # yield in order to have multiple returns
+            yield node.data
+            node = node.next
+
     def items(self):
         """
         Returns a list of all items in this linked list.
@@ -339,8 +359,14 @@ def test_linked_list():
     print('size: {}'.format(ll.size))
     print('length: {}'.format(ll.length()))
 
+    # print('Getting items by index:')
+    # for index in range(ll.size):
+    #     item = ll.get_at_index(index)
+    #     print('get_at_index({}): {!r}'.format(index, item))
+
+    # TESTING ITERABLE
     print('Getting items by index:')
-    for index in range(ll.size):
+    for index, item in enumerate(ll):
         item = ll.get_at_index(index)
         print('get_at_index({}): {!r}'.format(index, item))
 
@@ -357,6 +383,7 @@ def test_linked_list():
     print('tail: {}'.format(ll.tail))
     print('size: {}'.format(ll.size))
     print('length: {}'.format(ll.length()))
+
 
 
 if __name__ == '__main__':
