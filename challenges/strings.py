@@ -1,8 +1,13 @@
 #!python3
 
+# TODO: Permutation Finder
+
 def contains(text, pattern, letter=None, patterndex=0):
     """
     Return a boolean indicating whether pattern occurs in text.
+
+    Running time: O(n) – in transverses through list of characters in text
+    https://stackoverflow.com/questions/13884177/complexity-of-in-operator-in-python
     """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
@@ -17,6 +22,8 @@ def find_index(text, pattern, letter=None, patterndex=0):
     Recursive Implementation
     Returns the starting index of the first occurrence of pattern in text,
     or None if not found.
+
+    Running time: O(n) – find_all_indexes func is O(n)
     """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
@@ -31,6 +38,8 @@ def find_index(text, pattern, letter=None, patterndex=0):
 def find_all_indexes(text, pattern):
     """
     Iterative Implementation
+
+    Running time: O(n) – for loop tranverses through text characters
     """
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
@@ -116,10 +125,12 @@ def main():
 
 
 if __name__ == '__main__':
-    #main()
-    contains('abc', 'ac')
+    main()
+
+    # Tests
+    # contains('abc', 'ac')
     # False
-    find_all_indexes('aaa', 'aa')
+    # find_all_indexes('aaa', 'aa')
     # [0, 1]
-    find_index('abc', 'ac')
+    # find_index('abc', 'ac')
     # None
