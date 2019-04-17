@@ -120,6 +120,10 @@ def encode(number, base):
     number = str(number)
     fraction = False
 
+    # Negative detection
+    # if "-" in number:
+    #     part, 
+
     # Fraction detection
     if "." in number:
         fraction = True

@@ -273,11 +273,11 @@ class LinkedList(object):
         or
         raise ValueError if old_item is not found
 
-        Best case running time:
-        ??? under what conditions? [TODO]
+        Best case running time: 
+        O(1) - when index is 0 or the length of the linked list
 
         Worst case running time: 
-        ??? under what conditions? [TODO]
+        O(n) - transversing through n-1 items
         """
         # Start at the head node
         node = self.head
@@ -294,9 +294,15 @@ class LinkedList(object):
         raise ValueError('Value not found: {}'.format(old_item))  # Constant time to return None
 
     def delete(self, item):
-        """Delete the given item from this linked list, or raise ValueError.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Delete the given item from this linked list, or raise ValueError.
+        
+        Best case running time: 
+        O(1) - when index is 0 or the length of the linked list
+
+        Worst case running time: 
+        O(n) - transversing through n-1 items
+        """
 
         # Start at the head node
         node = self.head

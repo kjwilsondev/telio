@@ -1,7 +1,14 @@
 #!python
+# -*- coding: utf-8 -*-
 
 from linkedlist import LinkedList
 
+# Trouble shooting
+# SyntaxError: Non-ASCII character '\xe2' in file
+# with open("queue.py") as fp:
+#     for i, line in enumerate(fp):
+#         if "\xe2" in line:
+#             print i, repr(line)
 
 # Implement LinkedQueue below, then change the assignment at the bottom
 # to use this Queue implementation to verify it passes all tests
@@ -66,7 +73,7 @@ class LinkedQueue(object):
 
         Running time: O(1) – Returns tail data then dips
         """
-        # TODO: Remove and return front item, if any
+        # Remove and return front item, if any
         if self.is_empty():
             raise ValueError('Queue is empty')
         data = self.list.tail.data
@@ -144,8 +151,69 @@ class ArrayQueue(object):
         self.size -= 1
         return self.list.pop()
 
+class Deque(LinkedQueue):
+
+    def __init__(self, iterable=None):
+        """Initialize this queue and enqueue the given items, if any."""
+        # Initialize a new linked list to store the items
+        self.list = LinkedList()
+        if iterable is not None:
+            for item in iterable:
+                self.enqueue(item)
+
+    def push_front(self, item):
+        """
+        Inserts the given item in front of queue
+
+        Running time: O(1) – Function prepend does not transverse through items
+        """
+        # Push given item
+        return self.list.append(item)
+
+    def push_back(self, item):
+        """
+        Inserts the given item in back of queue
+
+        Running time: O(1) – Function prepend does not transverse through items
+        """
+        # Push given item
+        return self.list.prepend(item)
+
+    def pop_front(self):
+        """
+        Removes and returns the item at the front of this queue,
+        or 
+        raises ValueError if this queue is empty
+
+        Running time: O(1) – Returns tail data then dips
+        """
+        # Remove and return front item, if any
+        if self.is_empty():
+            raise ValueError('Queue is empty')
+        data = self.list.tail.data
+        self.list.tail = self.list.tail.previous
+        self.list.size -= 1
+        return data
+
+    def pop_back(self):
+        """
+        Removes and returns the item at the back of this queue,
+        or 
+        raises ValueError if this queue is empty
+
+        Running time: O(1) – Returns head data then dips
+        """
+        # Remove and return front item, if any
+        if self.is_empty():
+            raise ValueError('Queue is empty')
+        data = self.list.head.data
+        self.list.head = self.list.head.next
+        self.list.size -= 1
+        return data
+
 
 # Implement LinkedQueue and ArrayQueue above, then change the assignment below
 # to use each of your Queue implementations to verify they each pass all tests
 # Queue = LinkedQueue
-Queue = ArrayQueue
+# Queue = ArrayQueue
+Queue = Deque
