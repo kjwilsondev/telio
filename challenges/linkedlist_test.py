@@ -11,6 +11,7 @@ class NodeTest(unittest.TestCase):
         node = Node(data)
         assert node.data is data
         assert node.next is None
+        assert node.previous is None
 
 
 class LinkedListTest(unittest.TestCase):
@@ -25,6 +26,8 @@ class LinkedListTest(unittest.TestCase):
         ll = LinkedList(['A', 'B', 'C'])
         assert ll.head.data == 'A'  # first item
         assert ll.tail.data == 'C'  # last item
+        assert ll.head.previous is None
+        assert ll.tail.previous.data == 'B'
         assert ll.size == 3
 
     def test_items(self):
@@ -92,14 +95,17 @@ class LinkedListTest(unittest.TestCase):
         ll.insert_at_index(0, 'A')  # prepend('A')
         assert ll.head.data == 'A'  # new head (at index 0)
         assert ll.tail.data == 'B'  # unchanged (now at index 1)
+        assert ll.tail.previous.data == 'A'
         assert ll.size == 2
         ll.insert_at_index(2, 'D')  # append('D')
         assert ll.head.data == 'A'  # unchanged (at index 0)
         assert ll.tail.data == 'D'  # new tail (now at index 2)
+        assert ll.tail.previous.data == 'B'
         assert ll.size == 3
         ll.insert_at_index(2, 'C')  # insert 'C' between 'B' and 'D'
         assert ll.head.data == 'A'  # unchanged (at index 0)
         assert ll.tail.data == 'D'  # unchanged (now at index 3)
+        assert ll.tail.previous.data == 'C'
         assert ll.size == 4
         with self.assertRaises(ValueError):
             ll.insert_at_index(5, 'X')  # index too high
@@ -109,16 +115,19 @@ class LinkedListTest(unittest.TestCase):
     def test_append(self):
         ll = LinkedList()
         ll.append('A')
+        assert ll.head.previous is None
         assert ll.head.data == 'A'  # new head
         assert ll.tail.data == 'A'  # new tail
         assert ll.size == 1
         ll.append('B')
         assert ll.head.data == 'A'  # unchanged
         assert ll.tail.data == 'B'  # new tail
+        assert ll.tail.previous.data == 'A'
         assert ll.size == 2
         ll.append('C')
         assert ll.head.data == 'A'  # unchanged
         assert ll.tail.data == 'C'  # new tail
+        assert ll.tail.previous.data == 'B'
         assert ll.size == 3
 
     def test_prepend(self):
@@ -126,14 +135,17 @@ class LinkedListTest(unittest.TestCase):
         ll.prepend('C')
         assert ll.head.data == 'C'  # new head
         assert ll.tail.data == 'C'  # new head
+        assert ll.head.previous is None
         assert ll.size == 1
         ll.prepend('B')
         assert ll.head.data == 'B'  # new head
         assert ll.tail.data == 'C'  # unchanged
+        assert ll.tail.previous.data == 'B'
         assert ll.size == 2
         ll.prepend('A')
         assert ll.head.data == 'A'  # new head
         assert ll.tail.data == 'C'  # unchanged
+        assert ll.tail.previous.data == 'B'
         assert ll.size == 3
 
     def test_find(self):
