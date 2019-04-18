@@ -19,19 +19,30 @@ class HashTable(object):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
 
+    # Custom Hash Function
+    # def __hash__(self):
+    #     """Returns encoded key"""
+    #     return # Hash Function
+
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         return hash(key) % len(self.buckets)
 
     def load_factor(self):
-        """Return the load factor, the ratio of number of entries to buckets.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Returns the load factor, the ratio of number of entries to buckets.
+
+        Running time: O(1) - divides attributes
+        """
         # TODO: Calculate load factor
-        # return ...
+        return self.size / self.buckets
 
     def keys(self):
-        """Return a list of all keys in this hash table.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Returns a list of all keys in this hash table.
+
+        Running time: O(n) - traverses through all buckets to retrieve keys
+        """
         # Collect all keys in each of the buckets
         all_keys = []
         for bucket in self.buckets:
@@ -40,8 +51,11 @@ class HashTable(object):
         return all_keys
 
     def values(self):
-        """Return a list of all values in this hash table.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Returns a list of all values in this hash table.
+
+        Running time: O(n) - traverses through all buckets to retrieve values
+        """
         # Collect all values in each of the buckets
         all_values = []
         for bucket in self.buckets:
@@ -50,8 +64,11 @@ class HashTable(object):
         return all_values
 
     def items(self):
-        """Return a list of all entries (key-value pairs) in this hash table.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Returns a list of all entries (key-value pairs) in this hash table.
+
+        Running time: O(n) - traverses through all buckets to retrieve key, value pairs
+        """
         # Collect all pairs of key-value entries in each of the buckets
         all_items = []
         for bucket in self.buckets:
@@ -59,25 +76,36 @@ class HashTable(object):
         return all_items
 
     def length(self):
-        """Return the number of key-value entries by traversing its buckets.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Returns the number of key-value entries by traversing its buckets.
+
+        Running time: O(n) - traverses through all buckets to count size
+        """
         # Count number of key-value entries in each of the buckets
-        item_count = 0
-        for bucket in self.buckets:
-            item_count += bucket.length()
-        return item_count
-        # Equivalent to this list comprehension:
-        return sum(bucket.length() for bucket in self.buckets)
+        # Running time: O(n) - traverses through all buckets to count size
+        # item_count = 0
+        # for bucket in self.buckets:
+        #     item_count += bucket.length()
+        # return item_count
+        # # Equivalent to this list comprehension:
+        # return sum(bucket.length() for bucket in self.buckets)
+        return self.size
 
     def contains(self, key):
-        """Return True if this hash table contains the given key, or False.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        """
+        Returns True if this hash table contains the given key
+        or 
+        False
+
+        Running time: O(n) 
+        - hash funciton in bucket index is O(n) where n is the width of a number
+        - find function traverses through key values
+        """
         # Find the bucket the given key belongs in
-        index = self._bucket_index(key)
-        bucket = self.buckets[index]
+        index = self._bucket_index(key) # O(n)
+        bucket = self.buckets[index] # O(1)
         # Check if an entry with the given key exists in that bucket
-        entry = bucket.find(lambda key_value: key_value[0] == key)
+        entry = bucket.find(lambda key_value: key_value[0] == key) # O(n)
         return entry is not None  # True or False
 
     def get(self, key):

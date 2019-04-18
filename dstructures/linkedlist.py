@@ -108,7 +108,7 @@ class LinkedList(object):
         O(1) if index is head or tail
 
         Worst case running time: 
-        O(n) when transversal is neccessary
+        O(n) when traversal is neccessary
         (especially the second to last item!)
         """
         # Check if the given index is out of range and if so raise an error
@@ -116,9 +116,9 @@ class LinkedList(object):
             raise ValueError('List index out of range: {}'.format(index))
 
         # TODO: Make if statements that finds whether index is closer to head or tail
-        #       in order to transverse forwards or backwards
+        #       in order to traverse forwards or backwards
 
-        # Avoiding transversal if item is easily accessible
+        # Avoiding traversal if item is easily accessible
         if index == 0:
             return self.head.data
         if index == (self.size - 1):
@@ -148,7 +148,7 @@ class LinkedList(object):
         O(1) - when index is 0 or the length of the linked list
 
         Worst case running time: 
-        O(n) - transversing through n-1 items
+        O(n) - traversing through n-1 items
         """
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
@@ -157,7 +157,7 @@ class LinkedList(object):
         # New node initialized
         new_node = Node(item)
 
-        # Avoiding transversal if item is easily accessible
+        # Avoiding traversal if item is easily accessible
         if index == 0:
             # new_node.next = self.head
             # self.head = new_node
@@ -170,7 +170,7 @@ class LinkedList(object):
             return self.append(item)
 
         # TODO: Make if statements that finds whether index is closer to head or tail
-        #       in order to transverse forwards or backwards
+        #       in order to traverse forwards or backwards
 
         # Node counter initialized to index - 1
         node_count = index - 1
@@ -204,7 +204,7 @@ class LinkedList(object):
         Inserts the given item at the tail of linked list
 
         Best and worst case running time: 
-        O(1) because there is no transversal - strictly changing attributes
+        O(1) because there is no traversal - strictly changing attributes
         """
         # Create a new node to hold the given item
         new_node = Node(item)
@@ -225,7 +225,7 @@ class LinkedList(object):
         Insert the given item at the head of this linked list.
 
         Best and worst case running time: 
-        O(1) because there is no transversal - strictly changing attributes
+        O(1) because there is no traversal - strictly changing attributes
         """
         # Create a new node to hold the given item
         new_node = Node(item)
@@ -277,7 +277,7 @@ class LinkedList(object):
         O(1) - when index is 0 or the length of the linked list
 
         Worst case running time: 
-        O(n) - transversing through n-1 items
+        O(n) - traversing through n-1 items
         """
         # Start at the head node
         node = self.head
@@ -301,7 +301,7 @@ class LinkedList(object):
         O(1) - when index is 0 or the length of the linked list
 
         Worst case running time: 
-        O(n) - transversing through n-1 items
+        O(n) - traversing through n-1 items
         """
 
         # Start at the head node

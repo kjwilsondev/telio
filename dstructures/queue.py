@@ -48,7 +48,7 @@ class LinkedQueue(object):
         """
         Inserts the given item at the back of this queue.
 
-        Running time: O(1) – Function prepend does not transverse through items
+        Running time: O(1) – Function prepend does not traverse through items
         """
         # Insert given item
         return self.list.prepend(item)
@@ -119,7 +119,7 @@ class ArrayQueue(object):
         """
         Inserts the given item at the back of this queue
 
-        Running time: O(n) – insert function requires transversal of indexes
+        Running time: O(n) – insert function requires traversal of indexes
         https://wiki.python.org/moin/TimeComplexity
         """
         # Insert given item
@@ -143,7 +143,7 @@ class ArrayQueue(object):
         or 
         raise ValueError if this queue is empty
 
-        Running time: O(1) – pop function does not require transversal
+        Running time: O(1) – pop function does not require traversal
         """
         # Remove and return front item, if any
         if self.is_empty():
@@ -165,7 +165,7 @@ class Deque(LinkedQueue):
         """
         Inserts the given item in front of queue
 
-        Running time: O(1) – Function prepend does not transverse through items
+        Running time: O(1) – Function prepend does not traverse through items
         """
         # Push given item
         return self.list.append(item)
@@ -174,7 +174,7 @@ class Deque(LinkedQueue):
         """
         Inserts the given item in back of queue
 
-        Running time: O(1) – Function prepend does not transverse through items
+        Running time: O(1) – Function prepend does not traverse through items
         """
         # Push given item
         return self.list.prepend(item)

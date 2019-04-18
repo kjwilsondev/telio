@@ -39,7 +39,7 @@ class LinkedStack(object):
         """
         Inserts the given item on the top of this stack
 
-        Running time: O(1) – Function prepend does not transverse through items
+        Running time: O(1) – Function prepend does not traverse through items
         """
         # Push given item
         return self.list.prepend(item)
@@ -68,7 +68,11 @@ class LinkedStack(object):
             raise ValueError('Stack is empty')
         data = self.list.head.data
         self.list.head = self.list.head.next
+        # Separation Of Concerns:
+        # bad practice to modify attributes
+        # outside of original module
         self.list.size -= 1
+        # Instead use self.list.delete(data)
         return data
 
 
@@ -113,7 +117,7 @@ class ArrayStack(object):
         """
         Inserts the given item on the top of this stack
 
-        Running time: O(n) – insert function requires transversal of indexes
+        Running time: O(n) – insert function requires traversal of indexes
         https://wiki.python.org/moin/TimeComplexity
         """
         # Insert given item
@@ -137,7 +141,7 @@ class ArrayStack(object):
         Remove and return the item on the top of this stack,
         or 
         raise ValueError if this stack is empty.
-        Running time: O(1) – pop function does not require transversal"""
+        Running time: O(1) – pop function does not require traversal"""
         # Remove and return top item, if any
         if self.is_empty():
             raise ValueError('Stack is empty')
