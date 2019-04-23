@@ -128,7 +128,7 @@ class Set(HashSet):
                 new_set.set(item) # O(2n)
         return new_set
 
-    def difference(self, other_self):
+    def is_subset(self, other_self):
         """
         Returns a boolean indicating whether other_set is a subset of this set
 
