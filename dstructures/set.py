@@ -106,7 +106,7 @@ class Set(HashSet):
                 new_set.add(item) # O(2n)
         return new_set
 
-    def difference(self, other_self):
+    def difference(self, other_set):
         """
         Returns new_set that is the difference of this set and other_set
 
@@ -128,7 +128,7 @@ class Set(HashSet):
                 new_set.set(item) # O(2n)
         return new_set
 
-    def is_subset(self, other_self):
+    def is_subset(self, other_set):
         """
         Returns a boolean indicating whether other_set is a subset of this set
 
@@ -144,7 +144,6 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         - if load factor > .75, the resize method creates a new linkedlist making it O(n)
         """
-        new_set = Set(len(self))
         for item in self: # O(n)
             if item not in other_set: # O(m)
                 return False
