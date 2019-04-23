@@ -195,8 +195,12 @@ class HashTable(object):
         Should be called automatically when load factor exceeds a threshold
         such as 0.75 after an insertion (when set is called with a new key)
 
-        Best and worst case running time: ??? under what conditions? [TODO]
-        Best and worst case space usage: ??? what uses this memory? [TODO]"""
+        Running time: O(6n) => O(n)
+        - self.items() traverses through all of entries making it O(n)
+        - self.buckets creates an array of double the amount of linkedlists 
+          as entries making it O(2n)
+        - set funciton which hashes each item is O(3n)
+        """
         # If unspecified, choose new size dynamically based on current size
         if new_size is None:
             new_size = len(self.buckets) * 2  # Double size 
@@ -206,7 +210,7 @@ class HashTable(object):
         # Get a list to temporarily hold all current key-value entries
         kventries = self.items() # O(n)
         # Create a new list of new_size total empty linked list buckets
-        self.buckets = [LinkedList() for i in range(new_size)] # O(n)
+        self.buckets = [LinkedList() for i in range(new_size)] # O(2n)
         self.size = 0
         # Insert each key-value entry into the new list of buckets,
         # which will rehash them into a new bucket index based on the new size
