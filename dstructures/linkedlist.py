@@ -307,7 +307,6 @@ class LinkedList(object):
         # Start at the head node
         node = self.head
         # Keep track of the node before the one containing the given item
-        previous = None
         # Create a flag to track if we have found the given item
         found = False
         # Loop until we have found the given item or the node is None
@@ -318,7 +317,6 @@ class LinkedList(object):
                 found = True
             else:
                 # Skip to the next node
-                previous = node
                 node = node.next
         # Check if we found the given item or we never did and reached the tail
         if found:
@@ -326,24 +324,36 @@ class LinkedList(object):
             # Check if we found a node in the middle of this linked list
             if node is not self.head and node is not self.tail:
                 # Update the previous node to skip around the found node
-                previous.next = node.next
+                node.previous.next = node.next
+                node.next.previous = node.previous
                 # Unlink the found node from its next node
                 node.next = None
+                node.previous = None
                 return
-            # Check if we found a node at the head
+            # Check if we found a single node in linked list
+            if node is self.head and node is self.tail:
+                self.head = None
+                self.tail = None
+                return
+            # Check if we found a node at the head and tail
             if node is self.head:
                 # Update head to the next node
                 self.head = node.next
                 # Unlink the found node from the next node
+                node.next.previous = None
                 node.next = None
             # Check if we found a node at the tail
             if node is self.tail:
                 # Check if there is a node before the found node
-                if previous is not None:
+                if node.previous is not None:
                     # Unlink the previous node from the found node
-                    previous.next = None
+                    node.previous.next = None
+                    self
                 # Update tail to the previous node regardless
-                self.tail = previous
+                # Unlink node from list
+                self.tail = node.previous
+                node.previous.next = None
+                node.previous = None
         else:
             # Otherwise raise an error to tell the user that delete has failed
             raise ValueError('Item not found: {}'.format(item))

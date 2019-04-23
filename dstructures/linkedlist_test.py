@@ -188,7 +188,3 @@ class LinkedListTest(unittest.TestCase):
         assert ll.size == 0
         with self.assertRaises(ValueError):
             ll.delete('X')  # item not in list
-
-
-if __name__ == '__main__':
-    unittest.main()
