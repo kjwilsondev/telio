@@ -44,7 +44,7 @@ class LinkedList(object):
 
     def __iter__(self):
         """
-        Returns a string representation of node data
+        Iterates through nodes
         """
         # return 'LinkedList({!r})'.format(self.generator())
         return self.generator()

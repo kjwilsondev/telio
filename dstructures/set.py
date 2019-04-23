@@ -3,7 +3,7 @@ from linkedlist import LinkedList
 
 class Set(HashSet):
 
-    def __init__(self, init_size=16, elements=None):
+    def __init__(self, init_size=8, elements=None):
         """Initializes the set with the given initial size"""
         self.buckets = [LinkedList() for i in range(init_size)]
         self.size = 0  # Number of key-value entries
@@ -59,7 +59,7 @@ class Set(HashSet):
 
     def union(self, other_set):
         """
-        Returns a new set that is the union of this set and other_set
+        Returns new_set that is the union of this set and other_set
 
         Running time: O(4n + 4m) => O(n)
         n = original set entries 
@@ -73,7 +73,15 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         - if load factor > .75, the resize method creates a new linkedlist making it O(n)
         """
-        for 
+        new_set = Set(len(self))
+        for item in self:
+            new_set.set(item)
+        for item in other_set:
+            new_set.set(item)
+        return new_set
+
+
+
 
 
 

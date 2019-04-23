@@ -28,6 +28,19 @@ class HashSet(object):
         """Returns the bucket index where the given key would be stored."""
         return hash(item) % len(self.buckets)
 
+    def __iter__(self):
+        """
+        Iterates through items in set
+        """
+        return self.generator()
+
+    def generator(self):
+        """
+        Returns items in set
+        """
+        for item in self.items():
+            yield item
+
     def load_factor(self):
         """
         Returns the load factor, the ratio of number of entries to buckets.
