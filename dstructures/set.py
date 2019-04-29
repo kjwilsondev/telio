@@ -12,7 +12,7 @@ class Set(HashSet):
                 self.set(item)
                 self.size += 1
 
-    def contains(self, element):
+    def __contains__(self, element):
         """
         Returns a boolean indicating whether element is in set
 
@@ -149,5 +149,40 @@ class Set(HashSet):
                 return False
         return True
 
+def test_set():
+    test = Set()
+    print('Set: ' + str(test))
 
-# if __name__ == '__main__':
+    print('Setting entries:')
+    test.add('S')
+    print('set(S): ' + str(test))
+    test.add('A')
+    print('set(A): ' + str(test))
+    test.add('F')
+    print('set(F): ' + str(test))
+    test.add('E')
+    print('set(E): ' + str(test))
+    # print('Set: ' + str(test))
+    print('size: ' + str(test.size) + '\n')
+
+    print('Checking entries:')
+    print('contains(S): ' + str(test.contains('S')))
+    print('contains(A): ' + str(test.contains('A')))
+    print('contains(F): ' + str(test.contains('F')))
+    print('contains(E): ' + str(test.contains('E')))
+    print('')
+
+    print('Removing entries:')
+    test.remove('S')
+    print('remove(S): ' + str(test))
+    test.remove('A')
+    print('remove(A): ' + str(test))
+    test.remove('F')
+    print('remove(F): ' + str(test))
+    test.remove('E')
+    print('remove(E): ' + str(test))
+    print('contains(F): ' + str(test.contains('F')))
+    print('size: ' + str(test.size))
+
+if __name__ == '__main__':
+    test_set()

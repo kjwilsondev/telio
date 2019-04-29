@@ -32,9 +32,9 @@ class HashSet(object):
         """
         Iterates through items in set
         """
-        return self.generator()
+        return self._generator()
 
-    def generator(self):
+    def _generator(self):
         """
         Returns items in set
         """
