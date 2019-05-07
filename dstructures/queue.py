@@ -3,6 +3,8 @@
 
 from linkedlist import LinkedList
 
+# Using doubly linked list so the linked queue orientation doesnt matter
+
 # Trouble shooting
 # SyntaxError: Non-ASCII character '\xe2' in file
 # with open("queue.py") as fp:

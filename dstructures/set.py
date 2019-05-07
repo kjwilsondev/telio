@@ -5,12 +5,10 @@ class Set(HashSet):
 
     def __init__(self, init_size=8, elements=None):
         """Initializes the set with the given initial size"""
-        self.buckets = [LinkedList() for i in range(init_size)]
-        self.size = 0  # Number of key-value entries
-        if elements is not None:
-            for item in elements:
-                self.set(item)
-                self.size += 1
+        # if elements is not None:
+        #     for item in elements:
+        #         self.set(item)
+        super().__init__(init_size, elements) 
 
     def __contains__(self, element):
         """
@@ -43,7 +41,6 @@ class Set(HashSet):
         if self.contains(element):
             return None
         self.set(element)
-        self.size += 1
 
     def remove(self, element):
         """
@@ -58,7 +55,6 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         """
         self.delete(element)
-        self.size -= 1
 
     def union(self, other_set):
         """
@@ -152,14 +148,17 @@ class Set(HashSet):
 def test_set():
     test = Set()
     print('Set: ' + str(test))
+    print('size: ' + str(test.size) + '\n')
 
     print('Setting entries:')
     test.add('S')
+    print('size: ' + str(test.size) + '\n')
     print('set(S): ' + str(test))
     test.add('A')
     print('set(A): ' + str(test))
     test.add('F')
     print('set(F): ' + str(test))
+    print('size: ' + str(test.size) + '\n')
     test.add('E')
     print('set(E): ' + str(test))
     # print('Set: ' + str(test))

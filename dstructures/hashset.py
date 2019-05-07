@@ -58,10 +58,8 @@ class HashSet(object):
         """
         # Collect all pairs of key-value entries in each of the buckets
         all_items = []
-        self.size = 0
         for bucket in self.buckets:
             all_items.extend(bucket.items())
-            self.size += 1
         return all_items
 
     def length(self):
@@ -135,8 +133,9 @@ class HashSet(object):
         self.size += 1
         # Check if the load factor exceeds a threshold such as 0.75
         if self.load_factor() > 0.75:
+            new_size = self.size * 2
             # If so, automatically resize to reduce the load factor
-            self._resize() # O(n)
+            self._resize(new_size) # O(n)
 
     def delete(self, item):
         """
@@ -187,12 +186,9 @@ class HashSet(object):
         # Get a list to temporarily hold all current key-value entries
         entries = self.items() # O(n)
         # Create a new list of new_size total empty linked list buckets
-        self.buckets = [LinkedList() for i in range(new_size)] # O(n)
-        self.size = 0
         # Insert each key-value entry into the new list of buckets,
         # which will rehash them into a new bucket index based on the new size
-        for item in entries:
-            self.set(item)
+        self.__init__(new_size, entries) # O(n)
 
 
 # if __name__ == '__main__':
