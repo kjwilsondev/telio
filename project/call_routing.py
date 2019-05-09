@@ -30,27 +30,24 @@ class CallRoutes():
         results = ''
         # grab all the phone numbers from the file
         with open(phone_numbers, 'r') as nums:
-            numbers = nums.read().splitlines()
-            prefix_dict = self.split_prefixes(self.prefixes)
-
-            print(numbers)
+            numbers = nums.read().splitlines() # get list of phone numbers
+            prefix_dict = self.split_prefixes(self.prefixes) #assign prefixes to dict
+            
             for num in numbers:
-                # it seems that 8 is the length of the longest prefix
-                for i in range(8, 0, -1):
-                    # starting at the longest possible prefix, reduce size each time
+                # starting at the longest possible prefix, reduce size each time
+                for i in range(len(num)-1, 0, -1):
+                    # slicing increases space complexity; is there a better way?
                     current_prefix = num[:i]
                     if current_prefix in prefix_dict: # found match
-                        # print(current_prefix)
                         cost = prefix_dict[current_prefix]
                         new_result = num + ',' + cost + '\n' # concatenate result
-                        # print(new_result)
                         results += new_result
-                    break # evaluate next phone number
+                        break # evaluate next phone number
         return results
         
 
 if __name__ == "__main__":
-    c = CallRoutes("route-costs.txt", "phone-numbers.txt")
+    c = CallRoutes("route-costs-1000000.txt", "phone-numbers-10000.txt")
     print(c.match_prefix(c.phone_numbers))
 
 
