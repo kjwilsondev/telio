@@ -24,13 +24,12 @@ class CallRoutes():
             if "," in prefix_line:
                 prefix, cost = prefix_line.split(",")
                 prefix_dict[prefix] = cost.strip('\n')
-
         return prefix_dict
 
     def match_prefix(self, phone_numbers):
 
         with open(phone_numbers, 'r') as numbers:
-        prefix_dict = self.split_prefixes(self.prefixes)
+            prefix_dict = self.split_prefixes(self.prefixes)
 
         for num in numbers:
             longest_prefix = num[:8]
