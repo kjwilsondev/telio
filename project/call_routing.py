@@ -28,7 +28,7 @@ class CallRoutes():
         return prefix_dict
 
 if __name__ == "__main__":
-    c = CallRoutes("route-costs.txt", "phone-numbers.txt")
+    c = CallRoutes("data/route-costs.txt", "data/phone-numbers.txt")
     print(c.split_prefixes(c.prefixes))
 
 
