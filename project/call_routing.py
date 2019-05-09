@@ -23,14 +23,25 @@ class CallRoutes():
         for prefix_line in prefixes_list:
             if "," in prefix_line:
                 prefix, cost = prefix_line.split(",")
-                prefix_dict[prefix] = cost
+                prefix_dict[prefix] = cost.strip('\n')
 
         return prefix_dict
+
+    def match_prefix(self, phone_numbers):
+
+        with open(phone_numbers, 'r') as numbers:
+        prefix_dict = self.split_prefixes(self.prefixes)
+
+        for num in numbers:
+            longest_prefix = num[:8]
+            print(longest_prefix)
+            if num in prefix_dict:
+                pass
         
 
 if __name__ == "__main__":
-    c = CallRoutes("data/route-costs.txt", "data/phone-numbers.txt")
-    print(c.split_prefixes(c.prefixes))
+    c = CallRoutes("route-costs.txt", "phone-numbers.txt")
+    print(c.match_prefix(c.phone_numbers))
 
 
         
