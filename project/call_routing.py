@@ -29,10 +29,11 @@ class CallRoutes():
     def match_prefix(self, phone_numbers):
         results = ''
         # grab all the phone numbers from the file
-        with open(phone_numbers, 'r') as numbers:
-            print(numbers.read())
+        with open(phone_numbers, 'r') as nums:
+            numbers = nums.read().splitlines()
             prefix_dict = self.split_prefixes(self.prefixes)
 
+            print(numbers)
             for num in numbers:
                 # it seems that 8 is the length of the longest prefix
                 for i in range(8, 0, -1):
