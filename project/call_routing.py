@@ -27,15 +27,25 @@ class CallRoutes():
         return prefix_dict
 
     def match_prefix(self, phone_numbers):
-
+        results = ''
+        # grab all the phone numbers from the file
         with open(phone_numbers, 'r') as numbers:
+            print(numbers.read())
             prefix_dict = self.split_prefixes(self.prefixes)
 
-        for num in numbers:
-            longest_prefix = num[:8]
-            print(longest_prefix)
-            if num in prefix_dict:
-                pass
+            for num in numbers:
+                # it seems that 8 is the length of the longest prefix
+                for i in range(8, 0, -1):
+                    # starting at the longest possible prefix, reduce size each time
+                    current_prefix = num[:i]
+                    if current_prefix in prefix_dict: # found match
+                        # print(current_prefix)
+                        cost = prefix_dict[current_prefix]
+                        new_result = num + ',' + cost + '\n' # concatenate result
+                        # print(new_result)
+                        results += new_result
+                    break # evaluate next phone number
+        return results
         
 
 if __name__ == "__main__":
