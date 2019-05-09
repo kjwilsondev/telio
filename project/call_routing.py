@@ -26,7 +26,7 @@ class CallRoutes():
                 prefix_dict[prefix] = cost
 
         return prefix_dict
-        # test
+        
 
 if __name__ == "__main__":
     c = CallRoutes("data/route-costs.txt", "data/phone-numbers.txt")
