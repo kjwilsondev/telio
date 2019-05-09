@@ -118,9 +118,14 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         - if load factor > .75, the resize method creates a new linkedlist making it O(n)
         """
-        new_set = Set(len(self))
+        new_set = Set(self.size)
+        # files through original set
         for item in self: # O(n)
             if item not in other_set: # O(m)
+                new_set.set(item) # O(2n)
+        # files through other set
+        for item in other_set: # O(n)
+            if item not in self: # O(m)
                 new_set.set(item) # O(2n)
         return new_set
 

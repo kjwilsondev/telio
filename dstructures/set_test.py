@@ -39,7 +39,49 @@ class SetTest(unittest.TestCase):
     def test_union(self):
         s = Set(4, ['yes', 'no', 'maybe'])
         t = Set(4, ['yea', 'na', 'maybe'])
+        assert s.union(t).contains('yes') and s.union(t).contains('yea')
+        s = Set(4, ['bro', 'bruh', 'brother'])
+        t = Set(4, ['bud', 'buddy', 'browski'])
+        assert s.union(t).contains('bro') and s.union(t).contains('browski')
+        s = Set(4, ['yea', 'na', 'maybe'])
+        t = Set(4, ['yea', 'na', 'maybe'])
+        assert s.union(t).contains('yea')  and s.union(t).contains('na') and s.union(t).contains('maybe')
+
+    def test_intersection(self):
+        s = Set(4, ['yes', 'no', 'maybe'])
+        t = Set(4, ['yea', 'na', 'maybe'])
         assert s.union(t).contains('maybe')
+        s = Set(4, ['yea', 'no', 'maybe'])
+        t = Set(4, ['yea', 'na', 'maybe'])
+        assert s.union(t).contains('yea') and s.union(t).contains('maybe')
+        s = Set(4, ['yea', 'na', 'maybe'])
+        t = Set(4, ['yea', 'na', 'maybe'])
+        assert s.union(t).contains('yea')  and s.union(t).contains('na') and s.union(t).contains('maybe')
+
+    def test_difference(self):
+        s = Set(4, ['yes', 'no', 'maybe'])
+        t = Set(4, ['yea', 'na', 'maybe'])
+        assert s.difference(t).contains('yes') and s.difference(t).contains('yea')
+        assert s.difference(t).contains('maybe') is False
+        s = Set(4, ['bro', 'bruh', 'brother'])
+        t = Set(4, ['bud', 'buddy', 'browski'])
+        assert s.difference(t).contains('bro') and s.difference(t).contains('bud')
+        s = Set(4, ['bro', 'bruh', 'brother'])
+        t = Set(4, ['bro', 'buddy', 'browski'])
+        assert s.difference(t).contains('bruh') and s.difference(t).contains('browski')
+        assert s.difference(t).contains('bro') is False
+
+    def test_is_subset(self):
+        s = Set(4, ['yes', 'no', 'maybe'])
+        t = Set(4, ['yea', 'na', 'maybe'])
+        assert s.is_subset(t) is False
+        s = Set(4, ['yes', 'no', 'maybe'])
+        t = Set(4, ['yes', 'no', 'maybe', 'finally'])
+        assert s.is_subset(t) is True
+        s = Set(4, ['yes', 'no', 'maybe'])
+        t = Set(4, ['yes', 'no', 'maybe', 'finally'])
+        assert t.is_subset(s) is False
+
 
 if __name__ == '__main__':
     unittest.main()
