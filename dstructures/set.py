@@ -72,7 +72,7 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         - if load factor > .75, the resize method creates a new linkedlist making it O(n)
         """
-        new_set = Set(self.size)
+        new_set = Set(self.size + other_set.size)
         for item in self:
             new_set.add(item)
         for item in other_set:
@@ -95,7 +95,7 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         - if load factor > .75, the resize method creates a new linkedlist making it O(n)
         """
-        new_set = Set(len(self))
+        new_set = Set(min(self.size, other_set.size))
         for item in self: # O(n)
             # if other_set.contains(item): # O(2m)
             if item in other_set: # O(m)
@@ -118,7 +118,7 @@ class Set(HashSet):
         - find function traverses through items making it O(n)
         - if load factor > .75, the resize method creates a new linkedlist making it O(n)
         """
-        new_set = Set(self.size)
+        new_set = Set(min(self.size, other_set.size))
         # files through original set
         for item in self: # O(n)
             if item not in other_set: # O(m)

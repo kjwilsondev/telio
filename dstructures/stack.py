@@ -122,7 +122,7 @@ class ArrayStack(object):
         """
         # Insert given item
         self.size += 1
-        return self.list.insert(0, item)
+        return self.list.insert(self.size - 1, item)
 
     def peek(self):
         """
@@ -146,7 +146,7 @@ class ArrayStack(object):
         if self.is_empty():
             raise ValueError('Stack is empty')
         self.size -= 1
-        return self.list.pop(0)
+        return self.list.pop(self.size - 1)
 
 
 # Implement LinkedStack and ArrayStack above, then change the assignment below
