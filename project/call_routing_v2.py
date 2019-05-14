@@ -28,6 +28,7 @@ class CallRoutes(object):
             route_holder = self.split_prefixes(route_page)
             # set update method
             self.routes.update(route_holder) # O(len(n))
+        print("ROUTES",self.routes)
 
     def __iter__(self):
         """
@@ -137,8 +138,8 @@ if __name__ == "__main__":
     print(f"Total Memory Usage: {get_mem()} mb")
 
     # Uncomment lines 140 and 141 to display phone numbers and costs in terminal
-    with open("number-costs.txt", 'r') as costs:
-        print("Best call costs for the following numbers:\n{}".format(costs.read()))
+    # with open("number-costs.txt", 'r') as costs:
+    #     print("Best call costs for the following numbers:\n{}".format(costs.read()))
     
-    c.print_routes()
+    # c.print_routes()
     
