@@ -4,8 +4,7 @@ def call_routing(prefix_file, number):
     """
     Both params are strings. 
     """
-
-    """Load words from dictionary"""
+    
     file = open(prefix_file, 'r')
     prefixes = file.readlines()
     # print(prefixes)

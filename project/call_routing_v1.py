@@ -2,8 +2,6 @@
 
 import itertools
 
-# V3: Binary Search
-
 class CallRoutes():
     def __init__(self, prefixes, phone_numbers):
         self.prefixes = prefixes
