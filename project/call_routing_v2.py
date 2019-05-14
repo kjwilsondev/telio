@@ -136,7 +136,9 @@ if __name__ == "__main__":
     print(f"Total Processing Time: {after - before} s")
     print(f"Total Memory Usage: {get_mem()} mb")
 
-    # with open("number-costs.txt", 'r') as costs:
-    #     print("Best call costs for the following numbers:\n{}".format(costs.read()))
-    # c.print_routes()
+    # Uncomment lines 140 and 141 to display phone numbers and costs in terminal
+    with open("number-costs.txt", 'r') as costs:
+        print("Best call costs for the following numbers:\n{}".format(costs.read()))
+    
+    c.print_routes()
     
