@@ -123,11 +123,11 @@ def get_mem():
 if __name__ == "__main__":
     before = time.time() # keep track of time
 
-    print("Memory before: {} mb ".format(get_mem())
+    print("Memory before: {} mb ".format(get_mem()))
 
     # Testing on 10,000,000, 1,000,000 106,000 and 35,000 route files
     c = CallRoutes("route-costs-10000000.txt", "route-costs-1000000.txt", "route-costs-106000.txt", "route-costs-35000.txt")
-    print("Memory after loading call routes: {} mb ".format(get_mem())
+    print("Memory after loading call routes: {} mb ".format(get_mem()))
 
     # Testing on 10,000 phone number file
     c.output_number_costs("phone-numbers-10000.txt")
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     print(f"Total Processing Time: {after - before} s")
     print(f"Total Memory Usage: {get_mem()} mb")
 
-    with open("number-costs.txt", 'r') as costs:
-        print("Best call costs for the following numbers:\n{}".format(costs.read()))
+    # with open("number-costs.txt", 'r') as costs:
+    #     print("Best call costs for the following numbers:\n{}".format(costs.read()))
     # c.print_routes()
     
