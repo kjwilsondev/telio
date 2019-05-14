@@ -133,7 +133,7 @@ class ArrayStack(object):
         # Return top item, if any
         if self.is_empty():
             return None
-        return self.list[0]
+        return self.list[self.size -1]
 
 
     def pop(self):
