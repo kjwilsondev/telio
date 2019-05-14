@@ -22,7 +22,6 @@ class CallRoutes(object):
         initialize routes
         """
         self.routes = {}
-        route_holder = {}
         # input : route page text files
         # output: dictiorary of key: prefixes, value: costs
         for route_page in route_pages:
@@ -93,6 +92,8 @@ class CallRoutes(object):
         # initialize a txt file
         txt = open("number-costs.txt","w+")
 
+        # O(N) on average, N = len(first given list)
+        # This applies if only 1 list is given
         for phone_list in phone_number_lists:
             # number_holders is array of phone numbers
             pl = open(phone_list, 'r')
