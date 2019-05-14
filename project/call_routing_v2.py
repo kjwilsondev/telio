@@ -130,13 +130,13 @@ if __name__ == "__main__":
     print("Memory after loading call routes: {} mb ".format(get_mem())
 
     # Testing on 10,000 phone number file
-    costs_file = c.output_number_costs("phone-numbers-10000.txt")
+    c.output_number_costs("phone-numbers-10000.txt")
     after = time.time() # log total time
 
     print(f"Total Processing Time: {after - before} s")
     print(f"Total Memory Usage: {get_mem()} mb")
 
-    with open(costs_file, 'r') as costs:
+    with open("number-costs.txt", 'r') as costs:
         print("Best call costs for the following numbers:\n{}".format(costs.read()))
     # c.print_routes()
     
