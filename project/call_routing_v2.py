@@ -44,7 +44,7 @@ class CallRoutes(object):
     
     def print_routes(self):
         # print(self.routes)
-        print([(key, self.routes[key]) for key in sorted(self.routes)])
+        print("ALL ROUTES IN SORTED ORDER\n{}".format([(key, self.routes[key]) for key in sorted(self.routes)]))
 
     def split_prefixes(self, prefixes):
         """
