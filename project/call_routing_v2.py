@@ -1,17 +1,20 @@
 #python3
 
-
 # Helpful:
 # https://stackoverflow.com/questions/4989763/when-is-it-better-to-use-zip-instead-of-izip
 # In Python 3 the built-in zip does the same job as itertools.izip
 # 2.X returns an iterator instead of a list.
 # https://github.com/nschloe/matplotlib2tikz/issues/20
-try:
-    # Python 2
-    from itertools import izip
-except ImportError:
-    # Python 3
-    izip = zip
+# try:
+#     # Python 2
+#     from itertools import izip
+# except ImportError:
+#     # Python 3
+#     izip = zip
+
+import time
+import resource
+import platform
 
 class CallRoutes(object):
     def __init__(self, *route_pages):
@@ -29,13 +32,13 @@ class CallRoutes(object):
 
     def __iter__(self):
         """
-        Iterates through items in self.routes 
+        iterates through items in self.routes 
         """
         return self._generator()
 
     def _generator(self):
         """
-        Returns items in set
+        returns items in set
         """
         for item in self.routes.items():
             yield item
@@ -46,7 +49,7 @@ class CallRoutes(object):
 
     def split_prefixes(self, prefixes):
         """
-        return dictionary of routes from text file
+        returns dictionary of routes from text file
         """
         file = open(prefixes, 'r')
         prefixes_list = file.readlines()
@@ -107,9 +110,24 @@ class CallRoutes(object):
         txt.close()
         return
 
+def get_mem():
+    """
+    returns current memory usage in mb.
+    """
+    usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if platform.system() == 'Linux':
+        return round(usage/float(1 << 10), 2)
+    return round(usage/float(1 << 20), 2)
+
 if __name__ == "__main__":
-    c = CallRoutes("route-costs-1.txt", "route-costs-2.txt")
+    before = time.time()
+    print(get_mem())
+    c = CallRoutes("route-costs-1.txt", "route-costs-2.txt", "route-costs-3.txt", "route-costs-4.txt")
+    print(get_mem())
     c.output_number_costs("phone-numbers.txt")
+    after = time.time()
+    print(f"Time: {after - before} s")
+    print(f"Memory: {get_mem()} mb")
     # print(c.call_cost("+86153892109"))
     # c.print_routes()
     

@@ -40,7 +40,7 @@ class CallRoutes():
 
 if __name__ == "__main__":
     c = CallRoutes("route-costs.txt", "phone-numbers.txt")
-    print(c.match_prefix(c.phone_numbers))
+    # print(c.match_prefix(c.phone_numbers))
 
 
         
