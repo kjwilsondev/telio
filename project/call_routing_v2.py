@@ -109,7 +109,7 @@ class CallRoutes(object):
                 txt.write(f"{number},{cost}\r\n")
 
         txt.close()
-        return
+        return txt
 
 def get_mem():
     """
@@ -121,14 +121,22 @@ def get_mem():
     return round(usage/float(1 << 20), 2)
 
 if __name__ == "__main__":
-    before = time.time()
-    print(get_mem())
-    c = CallRoutes("route-costs-1.txt", "route-costs-2.txt", "route-costs-3.txt", "route-costs-4.txt")
-    print(get_mem())
-    c.output_number_costs("phone-numbers.txt")
-    after = time.time()
-    print(f"Time: {after - before} s")
-    print(f"Memory: {get_mem()} mb")
-    # print(c.call_cost("+86153892109"))
+    before = time.time() # keep track of time
+
+    print("Memory before: {} mb ".format(get_mem())
+
+    # Testing on 10,000,000, 1,000,000 106,000 and 35,000 route files
+    c = CallRoutes("route-costs-10000000.txt", "route-costs-1000000.txt", "route-costs-106000.txt", "route-costs-35000.txt")
+    print("Memory after loading call routes: {} mb ".format(get_mem())
+
+    # Testing on 10,000 phone number file
+    costs_file = c.output_number_costs("phone-numbers-10000.txt")
+    after = time.time() # log total time
+
+    print(f"Total Processing Time: {after - before} s")
+    print(f"Total Memory Usage: {get_mem()} mb")
+
+    with open(costs_file, 'r') as costs:
+        print("Best call costs for the following numbers:\n{}".format(costs.read()))
     # c.print_routes()
     
