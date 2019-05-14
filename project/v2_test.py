@@ -9,7 +9,12 @@ if not hasattr(unittest.TestCase, 'assertCountEqual'):
 
 class RoutingTest(unittest.TestCase):
     def test_init(self):
-        pass
+        c = CallRoutes()
+        assert c.routes == {} # make sure its an empty dict
+
+        routing = CallRoutes('route-costs-10.txt')
+        routes
+
 
     def test_iter_and_generator(self):
         pass
