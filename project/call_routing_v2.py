@@ -1,5 +1,32 @@
 #python3
 
+"""
+This module produces call pricing from multiple carriers. In order provide pricing
+class must be initialized with any number of route pages as parameters. Pages are
+converted into a dictionary format for speed and ease of phone number checking. 
+
+Routes can also be interated through and printed in sorted order for manual checking 
+as needed.
+
+Once routes have been added to class, one can call the `output_number_costs()` function
+to write costs for a file of phone numbers to a text file and return that text file. 
+
+**Functions:**
+
+`print_routes`: simply prints all routes stored in CallRoutes.routes property in sorted
+                order. This is useful because routes are stored in an unordered dictionary 
+                object. 
+
+`call_cost`:    Normally only called through the `output_number_costs` function, this 
+                function checks the CallRoutes.routes property for the cost, outputting 
+                the most inexpensive cost.
+                
+`output_number_costs`: This function takes in a list of phone number files and calls
+                `call_cost` on them. It then packages the phone numbers and their costs
+                and writes them to a text file. We also return the text file for ease of 
+                use (i.e. for printing) by the user. 
+"""
+
 import os
 import time
 import resource
@@ -80,7 +107,7 @@ class CallRoutes(object):
             phone_number = phone_number[:-1]
             # print("finding...")
         
-        return None
+        return 0
     
     def output_number_costs(self, *phone_number_lists):
         """
@@ -94,7 +121,7 @@ class CallRoutes(object):
         # initialize a txt file
         txt = open("data/number-costs.txt","w+")
 
-        # O(N) on average, N = len(first given list)
+        # O(n) on average, n = len(first given list)
         # This applies if only 1 list is given
         for phone_list in phone_number_lists:
             # number_holders is array of phone numbers
