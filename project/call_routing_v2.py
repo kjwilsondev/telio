@@ -220,7 +220,8 @@ def get_mem():
     Returns current memory usage in mb.
 
     --
-
+    Time complexity: O(1)
+    Space complexity: O(1)
     """
     usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     if platform.system() == 'Linux':
