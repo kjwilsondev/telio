@@ -1,17 +1,30 @@
 #python3
 
-# Helpful:
-# https://stackoverflow.com/questions/4989763/when-is-it-better-to-use-zip-instead-of-izip
-# In Python 3 the built-in zip does the same job as itertools.izip
-# 2.X returns an iterator instead of a list.
-# https://github.com/nschloe/matplotlib2tikz/issues/20
-# try:
-#     # Python 2
-#     from itertools import izip
-# except ImportError:
-#     # Python 3
-#     izip = zip
+"""
+This module produces call pricing from multiple carriers. In order provide pricing
+class must be initialized with any number of route pages as parameters. Pages are
+converted into a dictionary format for speed and ease of phone number checking. 
 
+Routes can also be interated through and printed in sorted order for manual checking 
+as needed.
+
+Once routes have been added to class, one can call the `output_number_costs()` function
+to write costs for a file of phone numbers to a text file and return that text file. 
+
+**Functions:**
+`print_routes`: simply prints all routes stored in CallRoutes.routes property in sorted
+                order. This is useful because routes are stored in an unordered dictionary 
+                object. 
+
+`call_cost`:    Normally only called through the `output_number_costs` function, this 
+                function checks the CallRoutes.routes property for the cost, outputting 
+                the most inexpensive cost.
+
+`output_number_costs`: This function takes in a list of phone number files and calls
+                `call_cost` on them. It then packages the phone numbers and their costs
+                and writes them to a text file. We also return the text file for ease of 
+                use (i.e. for printing) by the user. 
+"""
 import time
 import resource
 import platform
