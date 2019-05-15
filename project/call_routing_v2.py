@@ -85,6 +85,10 @@ class CallRoutes(object):
     def _generator(self):
         """
         returns items in set
+        -- 
+
+        Time complexity: O(n) where n is the number of items in the self.routes. 
+        Space complexity: O(1) no new structures are created or stored in memory.
         """
         for item in self.routes.items():
             yield item
@@ -135,7 +139,18 @@ class CallRoutes(object):
 
     def call_cost(self, phone_number):
         """
-        returns string of cost of phone number
+        Returns cost of phone number as a string. 
+
+        --
+
+        Time complexity: Best case O(1) if the entire phone number exists in the routes 
+        dictionary. Worst case O(p) where p is the length of the phone number if the 
+        matching route is very short or if the phone number is not in the routes dictionary.
+        
+        Space complexity: Best case O(1) if the entire phone number exists in the routes 
+        dictionary. Worst case O(p^2) where p is the length of the phone number if the 
+        matching route is very short or if the phone number is not in the routes dictionary
+        due to repeated slicing of the phone number. 
         """
         # holds original number
         original_number = phone_number
@@ -157,6 +172,9 @@ class CallRoutes(object):
         """
         input: text files of phone number lists
         output: returns new text file of all phone numbers with costs
+
+        --
+        
         """
         # deletes file - no longer neccessary
         # if os.path.exists("data/number-costs.txt"):
@@ -199,7 +217,10 @@ class CallRoutes(object):
 
 def get_mem():
     """
-    returns current memory usage in mb.
+    Returns current memory usage in mb.
+
+    --
+
     """
     usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     if platform.system() == 'Linux':
