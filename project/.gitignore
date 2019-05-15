@@ -3,6 +3,17 @@
 # Edit at https://www.gitignore.io/?templates=python,visualstudiocode
 
 ### Python ###
+
+# data
+phone-numbers.txt
+number-costs.txt
+route-costs-100.txt
+route-costs-600.txt
+route-costs-35000.txt
+route-costs-106000.txt
+route-costs-1000000.txt
+route-costs-10000000.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

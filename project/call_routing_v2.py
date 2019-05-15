@@ -1,20 +1,10 @@
 #python3
 
-# Helpful:
-# https://stackoverflow.com/questions/4989763/when-is-it-better-to-use-zip-instead-of-izip
-# In Python 3 the built-in zip does the same job as itertools.izip
-# 2.X returns an iterator instead of a list.
-# https://github.com/nschloe/matplotlib2tikz/issues/20
-# try:
-#     # Python 2
-#     from itertools import izip
-# except ImportError:
-#     # Python 3
-#     izip = zip
-
+import os
 import time
 import resource
 import platform
+import pathlib
 
 class CallRoutes(object):
     def __init__(self, *route_pages):
@@ -22,13 +12,14 @@ class CallRoutes(object):
         initialize routes
         """
         self.routes = {}
+
         # input : route page text files
         # output: dictiorary of key: prefixes, value: costs
         for route_page in route_pages:
             route_holder = self.split_prefixes(route_page)
             # set update method
             self.routes.update(route_holder) # O(len(n))
-        print("ROUTES",self.routes)
+        # print("ROUTES",self.routes)
 
     def __iter__(self):
         """
@@ -43,9 +34,15 @@ class CallRoutes(object):
         for item in self.routes.items():
             yield item
     
-    def print_routes(self):
-        # print(self.routes)
-        print("ALL ROUTES IN SORTED ORDER\n{}".format([(key, self.routes[key]) for key in sorted(self.routes)]))
+    def print_routes(self, want=None):
+        # sorted by key
+        if want == "key" or want == None:
+            print("Routes in order of key")
+            print([(key, self.routes[key]) for key in sorted(self.routes)])
+        # sorted by value
+        if want == "value":
+            print("Routes in order of value")
+            print(sorted(self.routes.items(), key = lambda kv:(kv[1], kv[0])))
 
     def split_prefixes(self, prefixes):
         """
@@ -90,8 +87,12 @@ class CallRoutes(object):
         input: text files of phone number lists
         output: returns new text file of all phone numbers with costs
         """
+        # deletes file - no longer neccessary
+        # if os.path.exists("data/number-costs.txt"):
+        #     os.remove("data/number-costs.txt")
+
         # initialize a txt file
-        txt = open("number-costs.txt","w+")
+        txt = open("data/number-costs.txt","w+")
 
         # O(N) on average, N = len(first given list)
         # This applies if only 1 list is given
@@ -112,6 +113,19 @@ class CallRoutes(object):
         txt.close()
         return txt
 
+    # IDEA
+    # save time by reading file
+    # def save_time():
+        # check = Path("data/numbers-costs.txt")
+        # if config.is_file():
+        #     # Store configuration file values
+        # else:
+        #     # Keep presets
+        # searchfile = open("phone-numbers.txt", "r")
+        # for line in searchfile:
+        #     if "searchphrase" in line: print line
+        # searchfile.close()
+
 def get_mem():
     """
     returns current memory usage in mb.
@@ -122,24 +136,43 @@ def get_mem():
     return round(usage/float(1 << 20), 2)
 
 if __name__ == "__main__":
-    before = time.time() # keep track of time
+    # keep track of time and memory
+    before_time = time.time()
+    before_mem = get_mem()
 
-    print("Memory before: {} mb ".format(get_mem()))
+    # Input route-costs into CallRoutes object
+    # Around 15 sec to run
+    # c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
+    # c = CallRoutes("data/route-costs-100.txt")
+    c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
+    c.output_number_costs("data/phone-numbers.txt")
+    print(c.routes["+823320392141"])
+    # print("Memory after loading call routes: {} mb ".format(get_mem()))
 
-    # Testing on 10,000,000, 1,000,000 106,000 and 35,000 route files
-    c = CallRoutes("route-costs-10000000.txt", "route-costs-1000000.txt", "route-costs-106000.txt", "route-costs-35000.txt")
-    print("Memory after loading call routes: {} mb ".format(get_mem()))
+    # takes less than .1 second to calculate cost once constructor is built
+    # before_time = time.time()
+    # before_mem = get_mem()
 
-    # Testing on 10,000 phone number file
-    c.output_number_costs("phone-numbers-10000.txt")
-    after = time.time() # log total time
+    # outputs number-costs.txt
+    # c.output_number_costs("data/phone-numbers-test.txt")
+    # c.output_number_costs("data/phone-numbers.txt")
 
-    print(f"Total Processing Time: {after - before} s")
-    print(f"Total Memory Usage: {get_mem()} mb")
+    # prints routes
+    # c.print_routes()
+    # c.print_routes('value')
 
-    # Uncomment lines 140 and 141 to display phone numbers and costs in terminal
+    # print(c.call_cost("+613133255931"))
+    # print(c.call_cost("+81926008441"))
+
+    # log time and memory usage
+    after_time = time.time()
+    after_mem = get_mem()
+    print(f"Total Processing Time: {after_time - before_time} s")
+    print(f"Total Memory Usage: {after_mem - before_mem} mb")
+
+    # displays phone numbers and costs in terminal
     # with open("number-costs.txt", 'r') as costs:
     #     print("Best call costs for the following numbers:\n{}".format(costs.read()))
-    
+
     # c.print_routes()
     
