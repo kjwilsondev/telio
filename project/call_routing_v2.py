@@ -24,7 +24,23 @@ to write costs for a file of phone numbers to a text file and return that text f
 `output_number_costs`: This function takes in a list of phone number files and calls
                 `call_cost` on them. It then packages the phone numbers and their costs
                 and writes them to a text file. We also return the text file for ease of 
-                use (i.e. for printing) by the user. 
+                use (i.e. for printing) by the user.
+
+Improves on v1 by handling multiple pages of route costs and multiple pages of phone numbers.
+Also writes output to a file as well as returning file so that user can access the information
+either way. 
+
+There is also testing for most functions and code is well documented. Memory and time complexities
+for all functions are annotated and actual memory and time usage is logged and output to terminal. 
+
+Currently adding a function to handle multiple costs for identical routes. 
+
+Potential Improvements: 
+- create a web-service API to allow clients to price a call before it is initiated
+- create an efficient route cost lookup solution that can handle high spikes of traffic 
+(up to 10,000 requests per minute) without overloading servers
+- allow changes to a subset of the route cost data while the pricing web API remains 
+operational 
 """
 
 import os
@@ -36,7 +52,14 @@ import pathlib
 class CallRoutes(object):
     def __init__(self, *route_pages):
         """
-        initialize routes
+        Initialize all route pages and store routes and costs in self.routes, a dictionary.
+
+        --
+
+        Time complexity: O(n) where n is the number of route costs because we have to copy
+        each route over into a dictionary.
+        Space complexity: O(n) because we create a dictionary to handle all route costs and
+        store them all in memory.
         """
         self.routes = {}
 
@@ -50,7 +73,12 @@ class CallRoutes(object):
 
     def __iter__(self):
         """
-        iterates through items in self.routes 
+        Allows interation through all items in self.routes. 
+
+        -- 
+
+        Time complexity: O(n) where n is the number of items in the self.routes. 
+        Space complexity: O(1) no new structures are created or stored in memory.
         """
         return self._generator()
 
@@ -62,6 +90,16 @@ class CallRoutes(object):
             yield item
     
     def print_routes(self, want=None):
+        """
+        Sorts all items in self.routes, and returns them as a list in sorted order. 
+
+        --
+
+        Time complexity: O(n log n) it takes O(n) time to add all items in self.routes to 
+        list and O(n log n) time to sort the items in the list. 
+        Space complexity: O(n) a new list is created with length equal to the number of 
+        items in self.routes. 
+        """
         # sorted by key
         if want == "key" or want == None:
             print("Routes in order of key")
@@ -73,7 +111,13 @@ class CallRoutes(object):
 
     def split_prefixes(self, prefixes):
         """
-        returns dictionary of routes from text file
+        Returns dictionary of routes from text files.
+
+        --
+
+        Time complexity: O(n) have to iterate through all routes in self.routes
+        Space complexity: O(n) creating and returning new dictionary with length equal
+        to all items in prefixes files.
         """
         file = open(prefixes, 'r')
         prefixes_list = file.readlines()
