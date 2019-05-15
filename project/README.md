@@ -29,4 +29,4 @@ You have 5 carrier route lists, each with 10,000,000 (10M) entries (in arbitrary
 
 ### Complexity Analysis
 
-Annotate each function with complexity analysis of running time and space (memory)
+Annotate each function with complexity analysis of running time and space (memory).

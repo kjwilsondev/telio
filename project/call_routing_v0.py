@@ -1,4 +1,12 @@
 
+"""
+Meets basic requirements by searching phone number through list of routes
+and returning the number and the cost as a string output. 
+
+Potential improvements: 
+- Handle multiple phone numbers
+- Use better data structure than dynamic list to store routes
+"""
 
 def call_routing(prefix_file, number):
     """
