@@ -96,7 +96,7 @@ class CallRoutes(object):
             phone_number = phone_number[:-1]
             # print("finding...")
         
-        return None
+        return 0
     
     def output_number_costs(self, *phone_number_lists):
         """
@@ -106,7 +106,7 @@ class CallRoutes(object):
         # initialize a txt file
         txt = open("number-costs.txt","w+")
 
-        # O(N) on average, N = len(first given list)
+        # O(n) on average, n = len(first given list)
         # This applies if only 1 list is given
         for phone_list in phone_number_lists:
             # number_holders is array of phone numbers
@@ -150,9 +150,9 @@ if __name__ == "__main__":
     print(f"Total Processing Time: {after - before} s")
     print(f"Total Memory Usage: {get_mem()} mb")
 
-    # Uncomment lines 140 and 141 to display phone numbers and costs in terminal
-    # with open("number-costs.txt", 'r') as costs:
-    #     print("Best call costs for the following numbers:\n{}".format(costs.read()))
+    # Uncomment the next 2 lines to display phone numbers and costs in terminal
+    with open("number-costs.txt", 'r') as costs:
+        print("Best call costs for the following numbers:\n{}".format(costs.read()))
     
-    # c.print_routes()
+    c.print_routes()
     

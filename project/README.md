@@ -7,10 +7,6 @@ This was a system design challenge completed for `CS 1.3 - Data Structures and A
 - Faith Chikwekwe 👩🏾‍💻
 - KJ Wilson 👨🏽‍💻
 
-## Content
-
-For this assignment we were given three scenarios as follows: 
-
 ### Description
 
 This project is inspired by a real-world problem at a telephony API company – let's call it Teleo. The primary task is to implement an international phone call routing system that finds the least cost route through multiple carriers. One of the goals of this project is to demonstrate the wide variety of solutions and compare the tradeoffs with each.
