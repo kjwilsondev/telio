@@ -4,8 +4,8 @@ This was a system design challenge completed for `CS 1.3 - Data Structures and A
 
 ## Contributors
 
-Faith Chikwekwe
-KJ Wilson
+- Faith Chikwekwe 👩🏾‍💻
+- KJ Wilson 👨🏽‍💻
 
 ## Content
 
