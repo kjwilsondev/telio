@@ -82,7 +82,9 @@ class BinarySearchTree(object):
         """
         Return True if this binary search tree contains the given item.
 
-        Running time: TODO
+        Running time: O(n) 
+        - binary tress cut options in half making it O(log(n) on average
+          however, the worst case is when the tree is severely unbalanced
         """
         # Find a node with the given item, if any
         node = self._find_node_recursive(item, self.root)
@@ -94,7 +96,9 @@ class BinarySearchTree(object):
         Return an item in this binary search tree matching the given item,
         or None if the given item is not found.
 
-        Running time: TODO
+        Running time: O(n) 
+        - binary tress cut options in half making it O(log(n) on average
+          however, the worst case is when the tree is severely unbalanced
         """
         # Find a node with the given item, if any
         node = self._find_node_recursive(item, self.root)
@@ -107,7 +111,9 @@ class BinarySearchTree(object):
         """
         Inserts the given item in order into this binary search tree.
 
-        Running time: TODO
+        Running time: O(n) 
+        - binary tress cut options in half making it O(log(n) on average
+          however, the worst case is when the tree is severely unbalanced
         """
         # Handle the case where the tree is empty
         if self.is_empty():
@@ -120,13 +126,13 @@ class BinarySearchTree(object):
         parent = self._find_parent_node_recursive(item, self.root)
         # Check if the given item should be inserted left of parent node
         if item < parent.data:
-            # TODO: Create a new node and set the parent's left child
+            # Create a new node and set the parent's left child
             parent.left = BinaryTreeNode(item)
-        # TODO: Check if the given item should be inserted right of parent node
+        # Check if the given item should be inserted right of parent node
         elif item > parent.data:
-            # TODO: Create a new node and set the parent's right child
+            # Create a new node and set the parent's right child
             parent.right = BinaryTreeNode(item)
-        # TODO: Increase the tree size
+        # Increase the tree size
         self.size += 1
 
     def _find_node_iterative(self, item):
@@ -361,9 +367,9 @@ class BinarySearchTree(object):
         """
         # Create queue to store nodes not yet traversed in level-order
         queue = Deque()
-        # TODO: Enqueue given starting node
+        # Enqueue given starting node
         queue.enqueue(start_node)
-        # TODO: Loop until queue is empty
+        # Loop until queue is empty
         while queue.is_empty() is False:
             # Dequeue node at front of queue
             node = queue.dequeue()
