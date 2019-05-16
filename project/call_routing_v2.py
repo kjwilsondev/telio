@@ -108,11 +108,11 @@ class CallRoutes(object):
         """
         # sorted by key
         if want == "key" or want == None:
-            print("Routes in order of key")
-            print([(key, self.routes[key]) for key in sorted(self.routes)])
+            print("Routes in order of key:")
+            print([pair for pair in self])
         # sorted by value
         if want == "value":
-            print("Routes in order of value")
+            print("Routes in order of value:")
             print(sorted(self.routes.items(), key = lambda kv:(kv[1], kv[0])))
 
     def update(self, prefixes):
@@ -143,6 +143,7 @@ class CallRoutes(object):
                 prefix, cost = prefix_line.split(",")
                 # puts in (key: prefix, value: cost) and takes out \n
                 prefix_dict[prefix] = cost.strip('\n')
+
         # set update method
         # this method updates the self.routes dictionary with 
         # key:prefix, value:cost pairs in prefix_dict
@@ -229,7 +230,7 @@ class CallRoutes(object):
 
 def get_mem():
     """
-    Returns current memory usage in mb.
+    Returns current memory usage in bytes.
 
     --
     Time complexity: O(1)
@@ -247,8 +248,8 @@ if __name__ == "__main__":
 
     # Input route-costs into CallRoutes object
     # Around 15 sec to run
-    c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
-    # c = CallRoutes("data/route-costs-100.txt")
+    # c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
+    c = CallRoutes("data/route-costs-100.txt")
     # c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
     c.output_number_costs("data/phone-numbers.txt")
     # print(c.routes["+823320392141"])
@@ -259,12 +260,12 @@ if __name__ == "__main__":
     # before_mem = get_mem()
 
     # outputs number-costs.txt
-    # c.output_number_costs("data/phone-numbers-test.txt")
+    c.output_number_costs("data/phone-numbers-test.txt")
     # c.output_number_costs("data/phone-numbers.txt")
 
     # prints routes
-    # c.print_routes()
-    # c.print_routes('value')
+    c._print_routes()
+    c._print_routes('value')
 
     # print(c.call_cost("+613133255931"))
     # print(c.call_cost("+81926008441"))

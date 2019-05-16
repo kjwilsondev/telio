@@ -74,3 +74,7 @@ class RoutingTest(unittest.TestCase):
         route_line_count = sum(1 for line in open("data/phone-numbers-test.txt"))
         number_line_count = sum(1 for line in open("data/number-costs.txt"))
         assert route_line_count == number_line_count
+
+    def test__iter__(self):
+        c = CallRoutes("data/route-costs-100.txt")
+
