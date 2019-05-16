@@ -66,10 +66,7 @@ class CallRoutes(object):
         # input : route page text files
         # output: dictiorary of key: prefixes, value: costs
         for route_page in route_pages:
-            route_holder = self.split_prefixes(route_page)
-            # set update method
-            self.routes.update(route_holder) # O(len(n))
-        # print("ROUTES",self.routes)
+            self.update(route_page)
 
     def __iter__(self):
         """
@@ -90,10 +87,15 @@ class CallRoutes(object):
         Time complexity: O(n) where n is the number of items in the self.routes. 
         Space complexity: O(1) no new structures are created or stored in memory.
         """
-        for item in self.routes.items():
-            yield item
+        # sorted by key
+        for key in sorted(self.routes):
+            yield (key, self.routes[key])
+
+        # Test this idea !!
+        # for key, value in sorted(self.routes.items()):
+        #     yield (key, value)
     
-    def print_routes(self, want=None):
+    def _print_routes(self, want=None):
         """
         Sorts all items in self.routes, and returns them as a list in sorted order. 
 
@@ -113,9 +115,16 @@ class CallRoutes(object):
             print("Routes in order of value")
             print(sorted(self.routes.items(), key = lambda kv:(kv[1], kv[0])))
 
-    def split_prefixes(self, prefixes):
+    def update(self, prefixes):
         """
-        Returns dictionary of routes from text files.
+        old name: split_prefixes
+
+        Splits route-costs txt file lines into key:prefix value:cost pair dictionary
+        ex input: "+86153,0.84"
+        ex output: {(+86153:0.84)}
+
+        Updates self.routes dictionary with prefix dictionary pairs
+        Returns prefix dictionary from text file input.
 
         --
 
@@ -134,7 +143,10 @@ class CallRoutes(object):
                 prefix, cost = prefix_line.split(",")
                 # puts in (key: prefix, value: cost) and takes out \n
                 prefix_dict[prefix] = cost.strip('\n')
-
+        # set update method
+        # this method updates the self.routes dictionary with 
+        # key:prefix, value:cost pairs in prefix_dict
+        self.routes.update(prefix_dict) # O(len(n))
         return prefix_dict
 
     def call_cost(self, phone_number):
@@ -235,11 +247,11 @@ if __name__ == "__main__":
 
     # Input route-costs into CallRoutes object
     # Around 15 sec to run
-    # c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
+    c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
     # c = CallRoutes("data/route-costs-100.txt")
-    c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
+    # c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
     c.output_number_costs("data/phone-numbers.txt")
-    print(c.routes["+823320392141"])
+    # print(c.routes["+823320392141"])
     # print("Memory after loading call routes: {} mb ".format(get_mem()))
 
     # takes less than .1 second to calculate cost once constructor is built
@@ -261,7 +273,7 @@ if __name__ == "__main__":
     after_time = time.time()
     after_mem = get_mem()
     print(f"Total Processing Time: {after_time - before_time} s")
-    print(f"Total Memory Usage: {after_mem - before_mem} mb")
+    print(f"Total Memory Usage: {after_mem - before_mem} b")
 
     # displays phone numbers and costs in terminal
     # with open("number-costs.txt", 'r') as costs:
