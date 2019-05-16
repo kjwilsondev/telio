@@ -88,12 +88,8 @@ class CallRoutes(object):
         Space complexity: O(1) no new structures are created or stored in memory.
         """
         # sorted by key
-        for key in sorted(self.routes):
-            yield (key, self.routes[key])
-
-        # Test this idea !!
-        # for key, value in sorted(self.routes.items()):
-        #     yield (key, value)
+        for key, value in sorted(self.routes.items()):
+            yield (key, value)
     
     def _print_routes(self, want=None):
         """
@@ -169,10 +165,9 @@ class CallRoutes(object):
         original_number = phone_number
         while len(phone_number) > 0:
             # checks if phone number is in routes
-            if phone_number in self.routes:
+            if phone_number in self.routes: # O(1)
                 cost = self.routes[phone_number]
-                # print(f"{phone_number} cost found: {cost}")
-                # adds phone number to dictionary for convience
+                # adds phone number to dictionary for convenience
                 self.routes[original_number] = cost
                 return cost
             # Removes last character from string
@@ -185,13 +180,11 @@ class CallRoutes(object):
         """
         input: text files of phone number lists
         output: returns new text file of all phone numbers with costs
+                phone numbers are added to self.routes
 
         --
         
         """
-        # deletes file - no longer neccessary with w+
-        # if os.path.exists("data/number-costs.txt"):
-        #     os.remove("data/number-costs.txt")
 
         # initialize a txt file
         txt = open("data/number-costs.txt","w+")
@@ -215,19 +208,6 @@ class CallRoutes(object):
         txt.close()
         return txt
 
-    # IDEA
-    # save time by reading file
-    # def save_time():
-        # check = Path("data/numbers-costs.txt")
-        # if config.is_file():
-        #     # Store configuration file values
-        # else:
-        #     # Keep presets
-        # searchfile = open("phone-numbers.txt", "r")
-        # for line in searchfile:
-        #     if "searchphrase" in line: print line
-        # searchfile.close()
-
 def get_mem():
     """
     Returns current memory usage in bytes.
@@ -250,7 +230,7 @@ if __name__ == "__main__":
     # Around 15 sec to run
     # c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
     c = CallRoutes("data/route-costs-100.txt")
-    # c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
+    c.update("data/route-costs-600.txt")
     c.output_number_costs("data/phone-numbers.txt")
     # print(c.routes["+823320392141"])
     # print("Memory after loading call routes: {} mb ".format(get_mem()))
