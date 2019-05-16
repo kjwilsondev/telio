@@ -2,6 +2,7 @@
 
 from call_routing_v2 import CallRoutes
 import unittest
+import os, pathlib
 
 # Python 2 and 3 compatibility: unittest module renamed this assertion method
 # if not hasattr(unittest.TestCase, 'assertCountEqual'):
@@ -65,7 +66,11 @@ class RoutingTest(unittest.TestCase):
         assert c.call_cost("+8233812322") == "0.79"
 
     def test_output_number_costs(self):
-        """
-        checks if new routes were added
-        """
         c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
+        c.output_number_costs("data/phone-numbers-test.txt")
+        # tests file exists
+        assert os.path.exists("data/number-costs.txt") is True
+        # tests how long file is
+        route_line_count = sum(1 for line in open("data/phone-numbers-test.txt"))
+        number_line_count = sum(1 for line in open("data/number-costs.txt"))
+        assert route_line_count == number_line_count
