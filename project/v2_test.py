@@ -12,7 +12,7 @@ class RoutingTest(unittest.TestCase):
         c = CallRoutes()
         assert c.routes == {} # make sure its an empty dict
 
-    def test_split_prefixes(self):
+    def test_update(self):
         c = CallRoutes("data/route-costs-600.txt")
         assert c.routes["+82338123"] == "0.79"
         assert c.routes["+861694484"] == "0.94"
@@ -26,6 +26,33 @@ class RoutingTest(unittest.TestCase):
         assert c.routes["+1656665"] == "0.10"
         assert c.routes["+449326404"] == "0.37"
 
+        c.update("data/route-costs-100.txt")
+        assert c.routes["+449275049"] == "0.49" # line 2
+        assert c.routes["+4982121410"] == "0.46" # line 20
+        assert c.routes["+1941672"] == "0.04" # line 30
+        assert c.routes["+1888"] == "0.05"# line 40
+        assert c.routes["+1432323"] == "0.03" # line 50
+        assert c.routes["+82417093"] == "0.55" # line 60
+
+        c.output_number_costs("data/phone-numbers-test.txt")
+        """
+        input: txt file with phone numbers without cost
+        output: new txt file with phone numbers with cost
+        
+        tests that the phone nubmers from phone-numbers-test
+        updated to prefix dictionary
+        """
+        assert c.routes["+14326228140"] == "0.03"
+        assert c.routes["+14326228158"] == "0.03"
+        assert c.routes["+14324751325"] == "0.03"
+        assert c.routes["+14328611917"] == "0.03"
+        assert c.routes["+14322617591"] == "0.03"
+        assert c.routes["+14322611331"] == "0.03"
+        assert c.routes["+14327289105"] == "0.03"
+        assert c.routes["+14326809107"] == "0.03"
+        assert c.routes["+14324133948"] == "0.03"
+        assert c.routes["+14323815283"] == "0.03"
+        
     def test_call_cost(self):
         c = CallRoutes("data/route-costs-600.txt")
         assert c.call_cost("+8233812322") == "0.79"
@@ -42,14 +69,3 @@ class RoutingTest(unittest.TestCase):
         checks if new routes were added
         """
         c = CallRoutes("data/route-costs-600.txt", "data/route-costs-100.txt")
-        c.output_number_costs("data/phone-numbers-test.txt")
-        assert c.routes["+14326228140"] == "0.03"
-        assert c.routes["+14326228158"] == "0.03"
-        assert c.routes["+14324751325"] == "0.03"
-        assert c.routes["+14328611917"] == "0.03"
-        assert c.routes["+14322617591"] == "0.03"
-        assert c.routes["+14322611331"] == "0.03"
-        assert c.routes["+14327289105"] == "0.03"
-        assert c.routes["+14326809107"] == "0.03"
-        assert c.routes["+14324133948"] == "0.03"
-        assert c.routes["+14323815283"] == "0.03"

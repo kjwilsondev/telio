@@ -188,7 +188,7 @@ class CallRoutes(object):
         --
         
         """
-        # deletes file - no longer neccessary
+        # deletes file - no longer neccessary with w+
         # if os.path.exists("data/number-costs.txt"):
         #     os.remove("data/number-costs.txt")
 
