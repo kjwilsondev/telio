@@ -1,6 +1,6 @@
 #!python
 from stack import Stack
-from queue import Queue
+from queue import Deque
 
 class BinaryTreeNode(object):
 
@@ -99,7 +99,9 @@ class BinarySearchTree(object):
         # Find a node with the given item, if any
         node = self._find_node_recursive(item, self.root)
         # Return the node's data if found, or None
-        return node.data if node.data else None
+        if node is not None:
+            return node.data
+        return None
 
     def insert(self, item):
         """
@@ -167,17 +169,17 @@ class BinarySearchTree(object):
             # Not found (base case)
             return None
         # Check if the given item matches the node's data
-        elif node == item:
+        elif node.data == item:
             # Return the found node
             return node
         # Check if the given item is less than the node's data
-        elif node.data < item:
+        elif node.data > item:
             # Recursively descend to the node's left child, if it exists
             return self._find_node_recursive(item, node.left)
         # Check if the given item is greater than the node's data
-        elif node.data > item:
+        elif node.data < item:
             # TODO: Recursively descend to the node's right child, if it exists
-            return self._find_node_recursive(item, node.left)
+            return self._find_node_recursive(item, node.right)
 
     def _find_parent_node_iterative(self, item):
         """Return the parent node of the node containing the given item
@@ -298,9 +300,9 @@ class BinarySearchTree(object):
         # Visit this node's data with given function
         visit(node.data)
         # Traverse left subtree, if it exists
-        self._traverse_in_order_recursive(node.left, visit)
+        self._traverse_pre_order_recursive(node.left, visit)
         # Traverse right subtree, if it exists
-        self._traverse_in_order_recursive(node.right, visit)
+        self._traverse_pre_order_recursive(node.right, visit)
 
     def _traverse_pre_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative pre-order traversal (DFS).
@@ -358,7 +360,7 @@ class BinarySearchTree(object):
         Running time: balanced - O(logn), unbalanced - O(n)
         """
         # Create queue to store nodes not yet traversed in level-order
-        queue = Queue()
+        queue = Deque()
         # TODO: Enqueue given starting node
         queue.enqueue(start_node)
         # TODO: Loop until queue is empty
