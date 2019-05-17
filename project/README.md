@@ -1,32 +1,38 @@
-# Call Routing Project
+# Call_Routing_V2
 
-This was a system design challenge completed for `CS 1.3 - Data Structures and Algorithms` to emphasize problem solving in different contexts, good use of data structures and attention to time and space complexity.
+This module produces call pricing from multiple carriers. In order provide pricing
+class must be initialized with any number of route pages as parameters. Pages are
+converted into a dictionary format for speed and ease of phone number checking. 
 
-## Contributors
+Routes can also be interated through and printed in sorted order for manual checking 
+as needed.
 
-- Faith Chikwekwe 👩🏾‍💻
-- KJ Wilson 👨🏽‍💻
+Once routes have been added to class, one can call the `output_number_costs()` function
+to write costs for a file of phone numbers to a text file and return that text file. 
 
-### Description
+**Functions:**
 
-This project is inspired by a real-world problem at a telephony API company – let's call it Teleo. The primary task is to implement an international phone call routing system that finds the least cost route through multiple carriers. One of the goals of this project is to demonstrate the wide variety of solutions and compare the tradeoffs with each.
+`print_routes`: simply prints all routes stored in CallRoutes.routes property in sorted
+                order. This is useful because routes are stored in an unordered dictionary 
+                object. 
 
-### Challenges
+`call_cost`:    Normally only called through the `output_number_costs` function, this 
+                function checks the CallRoutes.routes property for the cost, outputting 
+                the most inexpensive cost.
+                
+`output_number_costs`: This function takes in a list of phone number files and calls
+                `call_cost` on them. It then packages the phone numbers and their costs
+                and writes them to a text file. We also return the text file for ease of 
+                use (i.e. for printing) by the user.
 
-These challenges are the baseline required to complete the project. Be sure to complete these before before starting on the stretch challenges below.
+Improves on v1 by handling multiple pages of route costs and multiple pages of phone numbers.
+Also writes output to a file as well as returning file so that user can access the information
+either way. 
 
-**Scenario 1: One-time route cost check**
+There is also testing for functions and code is well documented. Memory and time complexities
+for all functions are annotated and actual memory and time usage is logged and output to terminal. 
 
-You have a carrier route list with 100,000 (100K) entries (in arbitrary order) and a single phone number. How quickly can you find the cost of calling this number?
-
-**Scenario 2: List of route costs to check**
-
-You have a carrier route list with 100,000 (100K) entries (in arbitrary order) and a list of 1000 phone numbers. How can you operationalize the route cost lookup problem?
-
-**Scenario 3: Multiple long carrier route lists**
-
-You have 5 carrier route lists, each with 10,000,000 (10M) entries (in arbitrary order) and a list of 10,000 phone numbers. How can you speed up your route cost lookup solution to handle this larger dataset?
-
-### Complexity Analysis
-
-Annotate each function with complexity analysis of running time and space (memory).
+Potential Improvements: 
+- create a web-service API to allow clients to price a call before it is initiated
+- create an efficient route cost lookup solution that can handle high spikes of traffic 
+(up to 10,000 requests per minute) without overloading servers
