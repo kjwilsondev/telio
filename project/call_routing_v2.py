@@ -66,7 +66,7 @@ class CallRoutes(object):
         # input : route page text files
         # output: dictiorary of key: prefixes, value: costs
         for route_page in route_pages:
-            self.update(route_page)
+            self.update_routes(route_page)
 
     def __iter__(self):
         """
@@ -111,7 +111,7 @@ class CallRoutes(object):
             print("Routes in order of value:")
             print(sorted(self.routes.items(), key = lambda kv:(kv[1], kv[0])))
 
-    def update(self, prefixes):
+    def update_routes(self, prefixes):
         """
         old name: split_prefixes
 
@@ -230,14 +230,14 @@ if __name__ == "__main__":
     # Around 15 sec to run
     # c = CallRoutes("data/route-costs-10000000.txt", "data/route-costs-1000000.txt", "data/route-costs-106000.txt", "data/route-costs-35000.txt", "data/route-costs-600.txt", "data/route-costs-100.txt")
     c = CallRoutes("data/route-costs-100.txt")
-    c.update("data/route-costs-600.txt")
+    c.update_routes("data/route-costs-600.txt")
     c.output_number_costs("data/phone-numbers.txt")
     # print(c.routes["+823320392141"])
     # print("Memory after loading call routes: {} mb ".format(get_mem()))
 
     # takes less than .1 second to calculate cost once constructor is built
-    # before_time = time.time()
-    # before_mem = get_mem()
+    before_time = time.time()
+    before_mem = get_mem()
 
     # outputs number-costs.txt
     c.output_number_costs("data/phone-numbers-test.txt")

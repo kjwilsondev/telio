@@ -13,7 +13,7 @@ class RoutingTest(unittest.TestCase):
         c = CallRoutes()
         assert c.routes == {} # make sure its an empty dict
 
-    def test_update(self):
+    def test_update_routes(self):
         c = CallRoutes("data/route-costs-600.txt")
         assert c.routes["+82338123"] == "0.79"
         assert c.routes["+861694484"] == "0.94"
@@ -27,7 +27,7 @@ class RoutingTest(unittest.TestCase):
         assert c.routes["+1656665"] == "0.10"
         assert c.routes["+449326404"] == "0.37"
 
-        c.update("data/route-costs-100.txt")
+        c.update_routes("data/route-costs-100.txt")
         assert c.routes["+449275049"] == "0.49" # line 2
         assert c.routes["+4982121410"] == "0.46" # line 20
         assert c.routes["+1941672"] == "0.04" # line 30
