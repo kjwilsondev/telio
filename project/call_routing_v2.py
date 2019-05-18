@@ -159,8 +159,7 @@ class CallRoutes(object):
         # initialize a txt file
         txt = open("data/number-costs.txt","w+")
 
-        # O(n) on average, n = len(first given list)
-        # This applies if only 1 list is given
+        # O(n), n = lines in lists
         for phone_list in phone_number_lists:
             # number_holders is array of phone numbers
             pl = open(phone_list, 'r')
