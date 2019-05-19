@@ -16,6 +16,8 @@ class RoutingTest(unittest.TestCase):
 
     def test_update_routes(self):
         c = CallRoutes("data/route-costs-600.txt")
+        # checks if constructor successfully implemented
+        # prefix dicitonary self.routes
         assert c.routes["+82338123"] == "0.79"
         assert c.routes["+861694484"] == "0.94"
         assert c.routes["+1329888"] == "0.06"
@@ -29,6 +31,8 @@ class RoutingTest(unittest.TestCase):
         assert c.routes["+449326404"] == "0.37"
 
         c.update_routes("data/route-costs-100.txt")
+        # checks if routes were successfully updated
+        # scenario 5
         assert c.routes["+449275049"] == "0.49" # line 2
         assert c.routes["+4982121410"] == "0.46" # line 20
         assert c.routes["+1941672"] == "0.04" # line 30
@@ -44,6 +48,7 @@ class RoutingTest(unittest.TestCase):
         tests that the phone nubmers from phone-numbers-test
         updated to prefix dictionary
         """
+        # scenario 4
         assert c.routes["+14326228140"] == "0.03"
         assert c.routes["+14326228158"] == "0.03"
         assert c.routes["+14324751325"] == "0.03"
