@@ -201,21 +201,16 @@ if __name__ == "__main__":
     c = CallRoutes("data/route-costs-100.txt")
     c.update_routes("data/route-costs-600.txt")
     c.output_number_costs("data/phone-numbers.txt")
+    # c.output_number_costs("data/phone-numbers-test.txt")
     # print(c.routes["+823320392141"])
     # print("Memory after loading call routes: {} mb ".format(get_mem()))
 
+    # TEST SPEED OF CALL COSTS FUNCTION
     # takes less than .1 second to calculate cost once constructor is built
     before_time = time.time()
     before_mem = get_mem()
 
-    # outputs number-costs.txt
-    c.output_number_costs("data/phone-numbers-test.txt")
-    # c.output_number_costs("data/phone-numbers.txt")
-
-    # prints routes
-    c._print_routes()
-    c._print_routes('value')
-
+    # call
     # print(c.call_cost("+613133255931"))
     # print(c.call_cost("+81926008441"))
 
@@ -225,9 +220,10 @@ if __name__ == "__main__":
     print(f"Total Processing Time: {after_time - before_time} s")
     print(f"Total Memory Usage: {after_mem - before_mem} b")
 
-    # displays phone numbers and costs in terminal
+    # prints phone numbers and costs in number-costs.txt
     # with open("number-costs.txt", 'r') as costs:
     #     print("Best call costs for the following numbers:\n{}".format(costs.read()))
-
-    # c.print_routes()
     
+    # prints routes
+    # c._print_routes()
+    # c._print_routes('value')
