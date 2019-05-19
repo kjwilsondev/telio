@@ -13,6 +13,11 @@ routes (carriers cost different amounts)
 """
 
 import itertools
+import os
+import time
+import resource
+import platform
+import pathlib
 
 class CallRoutes():
     def __init__(self, prefixes, phone_numbers):
@@ -56,11 +61,32 @@ class CallRoutes():
                         break  # evaluate next phone number
         return results
 
-        
+def get_mem():
+    """
+    Returns current memory usage in bytes.
+
+    --
+    Time complexity: O(1)
+    Space complexity: O(1)
+    """
+    usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    if platform.system() == 'Linux':
+        return round(usage/float(1 << 10), 2)
+    return round(usage/float(1 << 20), 2)
 
 if __name__ == "__main__":
+    # keep track of time and memory
+    before_time = time.time()
+    before_mem = get_mem()
+
     c = CallRoutes("route-costs-106000.txt", "phone-numbers-1000.txt")
     print(c.match_prefix(c.phone_numbers))
+
+    # log time and memory usage
+    after_time = time.time()
+    after_mem = get_mem()
+    print(f"Total Processing Time: {after_time - before_time} s")
+    print(f"Total Memory Usage: {after_mem - before_mem} b")
 
 
         
